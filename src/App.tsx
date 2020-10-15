@@ -1,16 +1,62 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+
+import {useState, useEffect} from 'react';
+
+
+import {tuiles} from './data/tuile';
+import {shuffleArray} from './data/deck';
 
 import Canvas from './components/Canvas'
 
-function App() {
+const App: React.FC = () => {
+
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const [nextTile, setNextTile] = useState(null);
+
+  useEffect(() => {
+      console.log('Window initial size', window.innerWidth, window.innerHeight);
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+  }, []);
+
+  useEffect(() => {
+    console.log(tuiles);
+
+
+    let deck = tuiles.map(tuile => {
+      let a = [];
+      for(var i = 0; i<tuile.quantite; i++) {
+        a.push(tuile.tuile.id);
+      }
+      return a;
+    }).flat();
+  
+  
+    let shuffledDeck = shuffleArray(deck);
+  
+    console.log("shuffledDeck", shuffledDeck);
+  
+    let tuile = tuiles.find(x => x.tuile.id === shuffledDeck[0]);
+    let tuile2 = tuile ? tuile.tuile : null;
+    
+    console.log("tuile", tuile);
+    console.log("tuile2", tuile2);
+    setNextTile(tuile2);
+  }, []);
+
   return (
     <React.Fragment>
-      <Canvas id={"background"} zIndex={0} />
-      <Canvas id={"foreground"} zIndex={1} />
+      {width && height && (
+        <React.Fragment>
+          <Canvas id={"background"} width={width} height={height} zIndex={0}/>
+          <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile}/>
+        </React.Fragment>
+      )}
     </React.Fragment>
-
   );
 }
 
