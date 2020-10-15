@@ -10,12 +10,14 @@ import {shuffleArray} from './data/deck';
 
 import Canvas from './components/Canvas'
 
+import Types from './types/tile'
+
 const App: React.FC = () => {
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  const [nextTile, setNextTile] = useState(null);
+  const [nextTile, setNextTile] = useState<{ id: number; centre: string; cotes: string[]; } | null>(null);
 
   useEffect(() => {
       console.log('Window initial size', window.innerWidth, window.innerHeight);
