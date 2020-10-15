@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/mdelarette/hex/issues"
   },
-  "homepage": "https://github.com/mdelarette/hex#readme"
+  "homepage": "https://github.com/mdelarette/hex#readme",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  }
 }
