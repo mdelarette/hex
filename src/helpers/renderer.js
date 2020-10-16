@@ -1,13 +1,13 @@
 const cosPiSur6 = Math.cos(Math.PI / 6);
 const sinPiSur6 = 1 / 2; // (1/2)
 
-drawCircle = (ctx, x, y, l) => {
+function drawCircle(ctx, x, y, l) {
   ctx.beginPath();
   ctx.arc(x, y, l, 0, 2 * Math.PI);
   ctx.stroke();
-};
+}
 
-drawHex = (ctx, x, y, l) => {
+function drawHex(ctx, x, y, l) {
   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
   ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
   ctx.lineTo(x, y + l);
@@ -18,9 +18,9 @@ drawHex = (ctx, x, y, l) => {
 
   ctx.strokeStyle = "orange";
   ctx.stroke();
-};
+}
 
-drawFilledHex = (ctx, x, y, l) => {
+function drawFilledHex(ctx, x, y, l) {
   ctx.beginPath();
 
   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
@@ -35,9 +35,9 @@ drawFilledHex = (ctx, x, y, l) => {
 
   ctx.fillStyle = "orange";
   ctx.fill();
-};
+}
 
-drawSimpleTuile = (ctx, x, y, l) => {
+export function drawSimpleTuile(ctx, x, y, l) {
   ctx.beginPath();
   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
   ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
@@ -66,9 +66,9 @@ drawSimpleTuile = (ctx, x, y, l) => {
 
   ctx.fillStyle = "red";
   ctx.fill();
-};
+}
 
-drawTuile = (ctx, x, y, l, tuile, patterns) => {
+function drawTuile(ctx, x, y, l, tuile, patterns) {
   // console.log("drawTuile", tuile, " at ", x , "x", y);
 
   let innerLength = l / 3;
@@ -176,9 +176,9 @@ drawTuile = (ctx, x, y, l, tuile, patterns) => {
     // ctx.fillStyle = pattern;
   }
   ctx.fill();
-};
+}
 
-drawPlayField = (ctx, playField) => {
+function drawPlayField(ctx, playField) {
   for (let i = 0; i < playField.length; i++) {
     let tuileInPlay = playField[i];
     drawTuile(
@@ -189,10 +189,10 @@ drawPlayField = (ctx, playField) => {
       tuileInPlay.tuile
     );
   }
-};
+}
 
 // https://www.redblobgames.com/grids/hexagons/#pixel-to-hex
-pixel_to_pointy_hex = (point, size) => {
+function pixel_to_pointy_hex(point, size) {
   var q = ((Math.sqrt(3) / 3) * point.x - (1 / 3) * point.y) / size;
   var r = ((2 / 3) * point.y) / size;
 
@@ -201,21 +201,21 @@ pixel_to_pointy_hex = (point, size) => {
   // q: Math.round(q),
   // r: Math.round(r)
   // };
-};
+}
 
 // https://www.redblobgames.com/grids/hexagons/#neighbors-axial
 // https://www.redblobgames.com/grids/hexagons/#hex-to-pixel-axial
 
-pointy_hex_to_pixel = (tuile, size) => {
+function pointy_hex_to_pixel(tuile, size) {
   var x =
     size *
     (Math.sqrt(3) * tuile.coordinates.q +
       (Math.sqrt(3) / 2) * tuile.coordinates.r);
   var y = size * ((3 / 2) * tuile.coordinates.r);
   return { x, y };
-};
+}
 
-drawPlayFieldWithCoordinates = (ctx, playField, size, patterns) => {
+function drawPlayFieldWithCoordinates(ctx, playField, size, patterns) {
   for (let i = 0; i < playField.length; i++) {
     let tuileInPlay = playField[i];
     var pos = pointy_hex_to_pixel(tuileInPlay, size);
@@ -228,4 +228,4 @@ drawPlayFieldWithCoordinates = (ctx, playField, size, patterns) => {
       patterns
     );
   }
-};
+}

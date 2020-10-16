@@ -1,8 +1,10 @@
-const tuile1 = {
+import { Tile, Deck } from '../types/tile';
+
+const tile_001: Tile = {
   id: 1,
   name: "Toute eau",
-  centre: "blue",
-  cotes: ["blue", "blue", "blue", "blue", "blue", "blue"],
+  center: "blue",
+  edges: ["blue", "blue", "blue", "blue", "blue", "blue"],
 };
 
 const tuile2 = {
@@ -76,6 +78,14 @@ const tuile13 = {
   centre: "blue",
   cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
 };
+
+
+const tile_014: Tile = {
+  id: 14,
+  name: "Toute eau simple",
+  center: "blue",
+};
+
 
 const tuile101 = {
   id: 101,
@@ -157,31 +167,33 @@ const tuile113 = {
   cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
 };
 
-export const tuiles = [
-  { tuile: tuile1, quantite: 3 },
-  { tuile: tuile2, quantite: 1 },
-  { tuile: tuile3, quantite: 1 },
-  { tuile: tuile4, quantite: 1 },
-  { tuile: tuile5, quantite: 1 },
-  { tuile: tuile6, quantite: 1 },
-  { tuile: tuile7, quantite: 1 },
-  { tuile: tuile8, quantite: 1 },
-  { tuile: tuile9, quantite: 1 },
-  { tuile: tuile10, quantite: 1 },
-  { tuile: tuile11, quantite: 1 },
-  { tuile: tuile12, quantite: 1 },
-  { tuile: tuile13, quantite: 1 },
-  { tuile: tuile101, quantite: 3 },
-  { tuile: tuile102, quantite: 1 },
-  { tuile: tuile103, quantite: 1 },
-  { tuile: tuile104, quantite: 1 },
-  { tuile: tuile105, quantite: 1 },
-  { tuile: tuile106, quantite: 1 },
-  { tuile: tuile107, quantite: 1 },
-  { tuile: tuile108, quantite: 1 },
-  { tuile: tuile109, quantite: 1 },
-  { tuile: tuile110, quantite: 1 },
-  { tuile: tuile111, quantite: 1 },
-  { tuile: tuile112, quantite: 1 },
-  { tuile: tuile113, quantite: 1 },
-];
+const deck:Deck = {tiles:[
+  { tile: tile_001, quantity: 3 },
+  { tile: tile_014, quantity: 1 },
+  // { tuile: tuile3, quantite: 1 },
+  // { tuile: tuile4, quantite: 1 },
+  // { tuile: tuile5, quantite: 1 },
+  // { tuile: tuile6, quantite: 1 },
+  // { tuile: tuile7, quantite: 1 },
+  // { tuile: tuile8, quantite: 1 },
+  // { tuile: tuile9, quantite: 1 },
+  // { tuile: tuile10, quantite: 1 },
+  // { tuile: tuile11, quantite: 1 },
+  // { tuile: tuile12, quantite: 1 },
+  // { tuile: tuile13, quantite: 1 },
+  // { tuile: tuile101, quantite: 3 },
+  // { tuile: tuile102, quantite: 1 },
+  // { tuile: tuile103, quantite: 1 },
+  // { tuile: tuile104, quantite: 1 },
+  // { tuile: tuile105, quantite: 1 },
+  // { tuile: tuile106, quantite: 1 },
+  // { tuile: tuile107, quantite: 1 },
+  // { tuile: tuile108, quantite: 1 },
+  // { tuile: tuile109, quantite: 1 },
+  // { tuile: tuile110, quantite: 1 },
+  // { tuile: tuile111, quantite: 1 },
+  // { tuile: tuile112, quantite: 1 },
+  // { tuile: tuile113, quantite: 1 },
+]};
+
+export default deck;
