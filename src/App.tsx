@@ -10,14 +10,14 @@ import {shuffleArray} from './data/deck';
 
 import Canvas from './components/Canvas'
 
-import Types from './types/tile'
+import { Tile, TileWithCoordinates, Coordinates} from "./types/tile";
 
 const App: React.FC = () => {
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  const [nextTile, setNextTile] = useState<{ id: number; centre: string; cotes: string[]; } | null>(null);
+  const [nextTile, setNextTile] = useState<Tile | null>(null);
 
   useEffect(() => {
       console.log('Window initial size', window.innerWidth, window.innerHeight);
@@ -54,7 +54,7 @@ const App: React.FC = () => {
     <React.Fragment>
       {width && height && (
         <React.Fragment>
-          <Canvas id={"background"} width={width} height={height} zIndex={0}/>
+          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null}/>
           <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile}/>
         </React.Fragment>
       )}
