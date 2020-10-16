@@ -1,11 +1,7 @@
-// interface Tile
-
-// { id: number; centre: string; cotes: string[]; }
-
-export type Coordinates = {
+export interface Coordinates {
     q: number;
     r: number;
-  };
+}
 
 export interface Tile {
     id: number;

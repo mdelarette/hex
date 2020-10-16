@@ -2,7 +2,9 @@ import React from 'react';
 
 import {useState, useEffect} from 'react';
 
-const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number}> = ({id, width, height, zIndex}) => {
+import { Tile } from '../types/tile';
+
+const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, nextTile: Tile | null}> = ({id, width, height, zIndex, nextTile}) => {
     
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
 
