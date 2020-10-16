@@ -2,17 +2,17 @@
 
 // { id: number; centre: string; cotes: string[]; }
 
-type Coordinates = {
+export type Coordinates = {
     q: number;
     r: number;
   };
 
-interface Tile {
+export interface Tile {
     id: number;
     center: string;
     edges: string[];
 }
 
-interface TileWithCoordinates extends Tile {
+export interface TileWithCoordinates extends Tile {
     coordinates: Coordinates;
 }

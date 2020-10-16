@@ -10,7 +10,7 @@ import {shuffleArray} from './data/deck';
 
 import Canvas from './components/Canvas'
 
-import Types from './types/tile'
+import { Tile } from './types/tile'
 
 const App: React.FC = () => {
 
@@ -55,7 +55,7 @@ const App: React.FC = () => {
       {width && height && (
         <React.Fragment>
           <Canvas id={"background"} width={width} height={height} zIndex={0}/>
-          <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile}/>
+          <Canvas id={"foreground"} width={width} height={height} zIndex={1} />
         </React.Fragment>
       )}
     </React.Fragment>
