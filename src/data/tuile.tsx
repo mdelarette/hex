@@ -1,10 +1,13 @@
-import { Tile, Deck } from '../types/tile';
+import { Tile, FieldType, Deck } from '../types/tile';
+
+
+
 
 const tile_001: Tile = {
   id: 1,
   name: "Toute eau",
-  center: "blue",
-  edges: ["blue", "blue", "blue", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
 const tuile2 = {
@@ -83,7 +86,7 @@ const tuile13 = {
 const tile_014: Tile = {
   id: 14,
   name: "Toute eau simple",
-  center: "blue",
+  center: FieldType.Water,
 };
 
 
@@ -166,6 +169,12 @@ const tuile113 = {
   centre: "brown",
   cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
 };
+
+const exp = {
+  
+}
+
+export const defaultPatterns = ['#7dd1ff', '#a65a35'];
 
 const deck:Deck = {tiles:[
   { tile: tile_001, quantity: 3 },
