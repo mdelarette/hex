@@ -1,11 +1,14 @@
 
-import { Tile } from "../types/tile";
+import { Tile, FieldType, Deck } from '../types/tile';
 
-const tuile1: Tile = {
+
+
+
+const tile_001: Tile = {
   id: 1,
   name: "Toute eau",
-  center: "blue",
-  edges: ["blue", "blue", "blue", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
 const tuile2 = {
@@ -81,11 +84,13 @@ const tuile13 = {
 };
 
 
-const tuile14: Tile = {
+
+const tile_014: Tile = {
   id: 14,
   name: "Toute eau simple",
-  center: "blue",
+  center: FieldType.Water,
 };
+
 
 const tuile101 = {
   id: 101,
@@ -167,10 +172,16 @@ const tuile113 = {
   cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
 };
 
-export const tuiles = [
-  { tuile: tuile1, quantite: 3 },
-  { tuile: tuile14, quantite: 3 },
-  // { tuile: tuile2, quantite: 1 },
+
+const exp = {
+  
+}
+
+export const defaultPatterns = ['#7dd1ff', '#a65a35'];
+
+const deck:Deck = {tiles:[
+  { tile: tile_001, quantity: 3 },
+  { tile: tile_014, quantity: 1 },
   // { tuile: tuile3, quantite: 1 },
   // { tuile: tuile4, quantite: 1 },
   // { tuile: tuile5, quantite: 1 },
@@ -195,4 +206,7 @@ export const tuiles = [
   // { tuile: tuile111, quantite: 1 },
   // { tuile: tuile112, quantite: 1 },
   // { tuile: tuile113, quantite: 1 },
-];
+
+]};
+
+export default deck;
