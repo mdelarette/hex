@@ -2,8 +2,7 @@ install yarn
 
 npm install -g yarn
 
-
-
+yarn deploy
 
 npm install → yarn
 
