@@ -338,3 +338,38 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
     );
   }
 }
+
+
+export function computeSize(playField:Playfield, width:number, height:number) {
+  
+  // Size for height
+	let minMax = { min: 0, max: 0};
+	
+	minMax = playField.tiles.reduce((accumulator, tuile) => {return { min: Math.min(accumulator.min, tuile.coordinates.r), max: Math.max(accumulator.max, tuile.coordinates.r)};}, minMax);
+		
+	let nb = minMax.max + (-minMax.min) + 1 + 2;
+
+	// let coef = 2 + (nb-1) * (1 + Math.sin(Math.PI/6));
+  let coef = 2 + (nb-1) * 1.5;
+  
+  let sizeForHeight = Math.floor(height/coef);
+
+  // Size for width
+  let sizeForWidth = width / 6 / cosPiSur6;
+  sizeForWidth = Math.floor(sizeForWidth);
+
+  if(playField.tiles.length > 0)
+  {
+    let mM = { min: Number.MAX_VALUE, max: Number.MIN_VALUE};
+    for(let i = 0; i<playField.tiles.length; i++ )
+    {
+      let pos = pointy_hex_to_pixel(playField.tiles[i], 10); // size does not matter
+      mM.min = Math.min(pos.x, mM.min);
+      mM.max = Math.max(pos.x, mM.max);
+    }
+    let nb = (mM.max - mM.min + 2 * 10 * cosPiSur6)/(2 * 10 * cosPiSur6) +2;
+    sizeForWidth = width / (nb * 2) / cosPiSur6;
+    sizeForWidth = Math.floor(sizeForWidth);
+  }
+	return Math.min(sizeForHeight, sizeForWidth);
+}

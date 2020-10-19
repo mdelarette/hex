@@ -34,7 +34,7 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             context.clearRect(0,0,width,height);
             if(nextTile)
             {
-                drawTile(context, mousePos, 25, nextTile, patterns);
+                drawTile(context, mousePos, tileSize, nextTile, patterns);
             }
         }
 
@@ -57,11 +57,12 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
     useEffect(() => {       
         if(playfield && context)
         {
-            console.log("Redraw", playfield);
+            console.log("Redraw", playfield, tileSize);
+            context.clearRect(0,0,width,height);
             drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
         } 
 
-    }, [playfield]);
+    }, [playfield, tileSize]);
     
 
     const handleMouseMove = (event:React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {

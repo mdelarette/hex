@@ -10,6 +10,7 @@ import { defaultPatterns } from '../src/data/tuile';
 
 import { shuffleArray } from './data/deck';
 import { pixel_to_pointy_hex } from '../src/helpers/renderer';
+import { computeSize } from '../src/helpers/renderer';
 
 
 
@@ -39,6 +40,12 @@ const App: React.FC = () => {
       console.log('Window initial size', window.innerWidth, window.innerHeight);
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
+
+      let initialSize = computeSize({tiles:[]}, window.innerWidth, window.innerHeight);
+      
+      console.log('initial tile size', initialSize);
+      setTileSize(initialSize);
+
   }, []);
 
 
@@ -136,8 +143,9 @@ const App: React.FC = () => {
 		
 		// size = computeSize(playFieldWithCoordinates, height);
 
-
+    let newSize = computeSize(newPlayfield, width, height);
     
+    setTileSize(newSize);
     setPlayfield(newPlayfield);
     setRemainingTiles(newRemainingTiles);
 }
