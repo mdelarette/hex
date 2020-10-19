@@ -140,10 +140,7 @@ const App: React.FC = () => {
 		console.log('newRemainingTiles', newRemainingTiles);
 		console.log('newPlayfield', newPlayfield);
 		
-		
-		// size = computeSize(playFieldWithCoordinates, height);
-
-    let newSize = computeSize(newPlayfield, width, height);
+		let newSize = computeSize(newPlayfield, width, height);
     
     setTileSize(newSize);
     setPlayfield(newPlayfield);

@@ -18,7 +18,12 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
 
     useEffect(() => {
         let c:HTMLCanvasElement|null = document.getElementById(id) as HTMLCanvasElement;        
-	    let ctx = c.getContext("2d");
+        let ctx = c.getContext("2d");
+        if(ctx)
+        {
+            ctx.font = "30px Arial";
+        }
+
         setContext(ctx);
     }, []);
 
@@ -60,6 +65,16 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             console.log("Redraw", playfield, tileSize);
             context.clearRect(0,0,width,height);
             drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
+
+            console.log("context", context.font);
+
+            console.log("measureText", );
+
+            let measureText = context.measureText("Remaining tile 4");
+            context.strokeText("Remaining tile 4", (width - measureText.width) / 2, 30);
+            
+            measureText = context.measureText("fillText");
+            context.fillText("fillText", (width - measureText.width) / 2, height - 30);
         } 
 
     }, [playfield, tileSize]);
