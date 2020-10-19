@@ -69,11 +69,16 @@ const App: React.FC = () => {
 
   useEffect(() => {
     var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
+    console.log('isMobile ?', navigator.userAgent);
+    console.log('isMobile ?', navigator.userAgent.toLowerCase());
+    console.log('isMobile ?', navigator.userAgent.toLowerCase().match(/mobile/i));
     if (isMobile) {
-      console.log('isMobile 1', isMobile);
+      console.log('isMobile', true);
     } else {
-      console.log('isMobile 0', isMobile);
+      console.log('isMobile', false);
     }
+    
+    console.log('maxTouchPoints ?', navigator.maxTouchPoints);
 }, []);
 
 
