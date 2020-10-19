@@ -67,6 +67,16 @@ const App: React.FC = () => {
   }, []);
 
 
+  useEffect(() => {
+    var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
+    if (isMobile) {
+      console.log('isMobile 1', isMobile);
+    } else {
+      console.log('isMobile 0', isMobile);
+    }
+}, []);
+
+
   const handleClick = (position:Point) => {    
     console.log("handleClick in app", position);
 
