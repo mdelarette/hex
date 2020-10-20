@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 import {useState, useEffect} from 'react';
@@ -9,6 +8,8 @@ import deck from '../src/data/tuile';
 import { defaultPatterns } from '../src/data/tuile';
 
 import { shuffleArray } from './data/deck';
+import { rotateArray } from './data/deck';
+
 import { pixel_to_pointy_hex } from '../src/helpers/renderer';
 import { computeSize } from '../src/helpers/renderer';
 
@@ -92,6 +93,11 @@ const App: React.FC = () => {
   const handleClick = (position:Point) => {    
     console.log("handleClick in app", position);
 
+    if(!nextTile)
+    {
+      console.log("No tile to add");
+      return;
+    }
     
 		var coordinates = {q: 0, r: 0};
 		if(playfield.tiles.length !== 0){
@@ -111,8 +117,12 @@ const App: React.FC = () => {
 			let counter = 0;
 			let neighbor = false;
 			do {
-				let checkCoordinates = {q: coordinates.q + neighborhood[counter].q, r: coordinates.r + neighborhood[counter].r };
-				neighbor = playfield.tiles.find(t => t.coordinates.q === checkCoordinates.q && t.coordinates.r === checkCoordinates.r) === undefined ;	
+        let checkCoordinates = {q: coordinates.q + neighborhood[counter].q, r: coordinates.r + neighborhood[counter].r };
+        
+				console.warn("checkCoordinates : ", counter, checkCoordinates);
+        neighbor = playfield.tiles.find(t => t.coordinates.q === checkCoordinates.q && t.coordinates.r === checkCoordinates.r) !== undefined ;	
+        
+				console.warn("neighbor : ", counter, neighbor);
 				counter++;
 			} while (!neighbor && (counter < neighborhood.length));
 			if(!neighbor)
@@ -132,6 +142,7 @@ const App: React.FC = () => {
       const newNextTile = deck.tiles.find(x => x.tile.id === newRemainingTiles[0])?.tile;
       
       setNextTile(newNextTile ? newNextTile : null);
+      console.log('newNextTile', newNextTile);
     }
     else {
       setNextTile(null);
@@ -147,13 +158,32 @@ const App: React.FC = () => {
     setRemainingTiles(newRemainingTiles);
 }
 
+
+const handleWheel = (delta:Number) => {    
+  console.log("handleWheel in app", delta);
+
+  if(!nextTile)
+  {
+    console.log("No tile to rotate");
+    return;
+  }
+
+  let newNextTile = {
+    ...nextTile,  
+    edges: rotateArray(nextTile.edges, delta > 0 ? -1 : 1)
+  };
+
+  setNextTile(newNextTile);
+}
+
+
   return (
     <React.Fragment>
       {width && height && (
         <React.Fragment>
 
-          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} playfield={playfield} tileSize={tileSize} />
-          <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick} playfield={null} tileSize={tileSize} />
+          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} onWheel={null} playfield={playfield} tileSize={tileSize} />
+          <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} />
         </React.Fragment>
       )}
     </React.Fragment>

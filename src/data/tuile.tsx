@@ -11,76 +11,76 @@ const tile_001: Tile = {
   edges: [FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile2 = {
+const tuile2: Tile = {
   id: 2,
-  centre: "blue",
-  cotes: ["brown", "blue", "blue", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile3 = {
+const tuile3: Tile = {
   id: 3,
-  centre: "blue",
-  cotes: ["brown", "brown", "blue", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile4 = {
+const tuile4: Tile = {
   id: 4,
-  centre: "blue",
-  cotes: ["brown", "blue", "brown", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile5 = {
+const tuile5: Tile = {
   id: 5,
-  centre: "blue",
-  cotes: ["brown", "blue", "blue", "brown", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile6 = {
+const tuile6: Tile = {
   id: 6,
-  centre: "blue",
-  cotes: ["brown", "brown", "brown", "blue", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile7 = {
+const tuile7: Tile = {
   id: 7,
-  centre: "blue",
-  cotes: ["brown", "brown", "blue", "brown", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile8 = {
+const tuile8: Tile = {
   id: 8,
-  centre: "blue",
-  cotes: ["brown", "brown", "blue", "blue", "brown", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Earth, FieldType.Water],
 };
 
-const tuile9 = {
+const tuile9: Tile = {
   id: 9,
-  centre: "blue",
-  cotes: ["brown", "brown", "brown", "brown", "blue", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile10 = {
+const tuile10: Tile = {
   id: 10,
-  centre: "blue",
-  cotes: ["brown", "brown", "brown", "blue", "brown", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water],
 };
 
-const tuile11 = {
+const tuile11: Tile = {
   id: 11,
-  centre: "blue",
-  cotes: ["brown", "brown", "blue", "brown", "brown", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Earth, FieldType.Water],
 };
 
-const tuile12 = {
+const tuile12: Tile = {
   id: 12,
-  centre: "blue",
-  cotes: ["brown", "brown", "brown", "brown", "brown", "blue"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water],
 };
 
-const tuile13 = {
+const tuile13: Tile = {
   id: 13,
-  centre: "blue",
-  cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
+  center: FieldType.Water,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth],
 };
 
 
@@ -92,120 +92,116 @@ const tile_014: Tile = {
 };
 
 
-const tuile101 = {
+const tuile101: Tile = {
   id: 101,
   name: "Ilot central",
-  centre: "brown",
-  cotes: ["blue", "blue", "blue", "blue", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile102 = {
+const tuile102: Tile = {
   id: 102,
-  centre: "brown",
-  cotes: ["brown", "blue", "blue", "blue", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile103 = {
+const tuile103: Tile = {
   id: 103,
-  centre: "brown",
-  cotes: ["brown", "brown", "blue", "blue", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile104 = {
+const tuile104: Tile = {
   id: 104,
-  centre: "brown",
-  cotes: ["brown", "blue", "brown", "blue", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile105 = {
+const tuile105: Tile = {
   id: 105,
-  centre: "brown",
-  cotes: ["brown", "blue", "blue", "brown", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile106 = {
+const tuile106: Tile = {
   id: 106,
-  centre: "brown",
-  cotes: ["brown", "brown", "brown", "blue", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Water],
 };
 
-const tuile107 = {
+const tuile107: Tile = {
   id: 107,
-  centre: "brown",
-  cotes: ["brown", "brown", "blue", "brown", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile108 = {
+const tuile108: Tile = {
   id: 108,
-  centre: "brown",
-  cotes: ["brown", "brown", "blue", "blue", "brown", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water, FieldType.Earth, FieldType.Water],
 };
 
-const tuile109 = {
+const tuile109: Tile = {
   id: 109,
-  centre: "brown",
-  cotes: ["brown", "brown", "brown", "brown", "blue", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Water],
 };
 
-const tuile110 = {
+const tuile110: Tile = {
   id: 110,
-  centre: "brown",
-  cotes: ["brown", "brown", "brown", "blue", "brown", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Water],
 };
 
-const tuile111 = {
+const tuile111: Tile = {
   id: 111,
-  centre: "brown",
-  cotes: ["brown", "brown", "blue", "brown", "brown", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Water, FieldType.Earth, FieldType.Earth, FieldType.Water],
 };
 
-const tuile112 = {
+const tuile112: Tile = {
   id: 112,
-  centre: "brown",
-  cotes: ["brown", "brown", "brown", "brown", "brown", "blue"],
+  center: FieldType.Earth,
+  edges: [FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Earth, FieldType.Water],
 };
 
-const tuile113 = {
+const tuile113: Tile = {
   id: 113,
   name: "Toute terre",
-  centre: "brown",
-  cotes: ["brown", "brown", "brown", "brown", "brown", "brown"],
+  center: FieldType.Earth
 };
 
 
-const exp = {
-  
-}
 
 export const defaultPatterns = ['#7dd1ff', '#a65a35'];
 
 const deck:Deck = {tiles:[
   { tile: tile_001, quantity: 3 },
   { tile: tile_014, quantity: 1 },
-  // { tuile: tuile3, quantite: 1 },
-  // { tuile: tuile4, quantite: 1 },
-  // { tuile: tuile5, quantite: 1 },
-  // { tuile: tuile6, quantite: 1 },
-  // { tuile: tuile7, quantite: 1 },
-  // { tuile: tuile8, quantite: 1 },
-  // { tuile: tuile9, quantite: 1 },
-  // { tuile: tuile10, quantite: 1 },
-  // { tuile: tuile11, quantite: 1 },
-  // { tuile: tuile12, quantite: 1 },
-  // { tuile: tuile13, quantite: 1 },
-  // { tuile: tuile101, quantite: 3 },
-  // { tuile: tuile102, quantite: 1 },
-  // { tuile: tuile103, quantite: 1 },
-  // { tuile: tuile104, quantite: 1 },
-  // { tuile: tuile105, quantite: 1 },
-  // { tuile: tuile106, quantite: 1 },
-  // { tuile: tuile107, quantite: 1 },
-  // { tuile: tuile108, quantite: 1 },
-  // { tuile: tuile109, quantite: 1 },
-  // { tuile: tuile110, quantite: 1 },
-  // { tuile: tuile111, quantite: 1 },
-  // { tuile: tuile112, quantite: 1 },
-  // { tuile: tuile113, quantite: 1 },
+  { tile: tuile3, quantity: 1 },
+  { tile: tuile4, quantity: 1 },
+  { tile: tuile5, quantity: 1 },
+  { tile: tuile6, quantity: 1 },
+  { tile: tuile7, quantity: 1 },
+  { tile: tuile8, quantity: 1 },
+  { tile: tuile9, quantity: 1 },
+  { tile: tuile10, quantity: 1 },
+  { tile: tuile11, quantity: 1 },
+  { tile: tuile12, quantity: 1 },
+  { tile: tuile13, quantity: 1 },
+  { tile: tuile101, quantity: 3 },
+  { tile: tuile102, quantity: 1 },
+  { tile: tuile103, quantity: 1 },
+  { tile: tuile104, quantity: 1 },
+  { tile: tuile105, quantity: 1 },
+  { tile: tuile106, quantity: 1 },
+  { tile: tuile107, quantity: 1 },
+  { tile: tuile108, quantity: 1 },
+  { tile: tuile109, quantity: 1 },
+  { tile: tuile110, quantity: 1 },
+  { tile: tuile111, quantity: 1 },
+  { tile: tuile112, quantity: 1 },
+  { tile: tuile113, quantity: 1 },
 
 ]};
 

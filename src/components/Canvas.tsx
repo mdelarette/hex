@@ -10,7 +10,7 @@ import {drawTile} from '../helpers/renderer';
 import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
 
 
-const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, playfield:Playfield|null, tileSize:number}> = ({id, width, height, zIndex, nextTile, patterns, onClick, playfield, tileSize}) => {
+const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, playfield:Playfield|null, tileSize:number}> = ({id, width, height, zIndex, nextTile, patterns, onClick, onWheel, playfield, tileSize}) => {
     
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
@@ -62,19 +62,14 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
     useEffect(() => {       
         if(playfield && context)
         {
-            console.log("Redraw", playfield, tileSize);
             context.clearRect(0,0,width,height);
             drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
 
-            console.log("context", context.font);
-
-            console.log("measureText", );
-
-            let measureText = context.measureText("Remaining tile 4");
-            context.strokeText("Remaining tile 4", (width - measureText.width) / 2, 30);
+            // let measureText = context.measureText("Remaining tile 4");
+            // context.strokeText("Remaining tile 4", (width - measureText.width) / 2, 30);
             
-            measureText = context.measureText("fillText");
-            context.fillText("fillText", (width - measureText.width) / 2, height - 30);
+            // measureText = context.measureText("fillText");
+            // context.fillText("fillText", (width - measureText.width) / 2, height - 30);
         } 
 
     }, [playfield, tileSize]);
@@ -100,6 +95,15 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             onClick(newMousePos);
         }
     }
+    
+    const handleWheel = (event:React.MouseEvent<HTMLCanvasElement, WheelEvent>) => {
+        event.preventDefault();
+        event.persist();
+        if(onWheel)
+        {
+            onWheel(event.nativeEvent.deltaY);
+        }
+    }
 
     return (
         <canvas
@@ -110,6 +114,7 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
 
 
             onMouseMove={handleMouseMove}
+            onWheel={handleWheel}
             onClick={handleClick}
         />
     );

@@ -7,24 +7,25 @@ const sinPiSur6 = 1 / 2; // (1/2)
 export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]) {
   // console.log("drawTuile", tuile, " at ", x , "x", y);
 
-  const innerLength = size / 3;
-
-  const x = position.x;
-  const y = position.y;
-  const l = size;
-
   if(!tile)
   {
-    drawFilledHex(ctx, position, size);
+    console.log("drawTile => drawFilledHex", tile);
+    drawFilledHex(ctx, position, size, "red");
     return;
   }
 
   if(!tile.edges)
   {
-    ctx.fillStyle = patterns[tile.center];
-    drawFilledHex(ctx, position, size); // set patterns[tile.center];
+    console.log("drawTile => drawFilledHex", tile);
+    drawFilledHex(ctx, position, size, patterns[tile.center]);
     return;
   }
+
+  const innerLength = size / 3;
+
+  const x = position.x;
+  const y = position.y;
+  const l = size;
 
 
   // Gauche
@@ -124,7 +125,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 //   ctx.stroke();
 // }
 
-function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number) {
+function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number, fillStyle:string) {
 
   const x = position.x;
   const y = position.y;
@@ -142,7 +143,7 @@ function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number
 
   ctx.closePath();
 
-  ctx.fillStyle = "orange";
+  ctx.fillStyle = fillStyle;
   ctx.fill();
 }
 
