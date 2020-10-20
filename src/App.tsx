@@ -94,6 +94,45 @@ const App: React.FC = () => {
 }, []);
 
 
+// const handleCtrlZ = () => {
+  
+//   console.log("handleCtrlZ", playfield.tiles.length);
+//   if(playfield.tiles.length > 0)
+//   {		
+
+//     let newPlayfield = {...playfield, tiles:[...playfield.tiles]};
+ 
+
+//     let newNextTile = newPlayfield.tiles.pop() as Tile;
+    
+//     let newRemainingTiles = [newNextTile.id, ...remainingTiles];
+    
+    
+//     let newTileSize = computeSize(newPlayfield, width, height);
+    
+//     setNextTile(newNextTile);
+//     setPlayfield(newPlayfield);
+//     setRemainingTiles(newRemainingTiles);
+//     setTileSize(newTileSize);
+
+//   }
+// }
+
+// useEffect(() => {
+
+//   document.addEventListener('keyup', (e) => {	
+//     console.log("keyup", e);
+//     // Canceling last round
+//     if(e.key === 'z' && e.ctrlKey)
+//     {		
+
+//       handleCtrlZ();
+//     }
+  
+//   }); 
+// }, [handleCtrlZ]);
+
+
 useEffect(() => {
 
   var newMessages = new Map([
@@ -196,15 +235,25 @@ const handleWheel = (delta:Number) => {
 }
 
 
+const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
+  event.preventDefault();
+  event.persist();
+
+  console.log("handleKeyUpCapture event", event);
+
+}
+
+
+
   return (
     <React.Fragment>
       {width && height && (
-        <React.Fragment>
+        <div onKeyUpCapture={handleKeyUpCapture}>
 
           <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} onWheel={null} playfield={playfield} tileSize={tileSize} messages={null}/>
           <Canvas id={"texts"} width={width} height={height} zIndex={1} nextTile={null} patterns={[]} onClick={null}  onWheel={null} playfield={null} tileSize={0} messages={messages}/>
           <Canvas id={"foreground"} width={width} height={height} zIndex={2} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} messages={null}/>
-        </React.Fragment>
+        </div>
       )}
     </React.Fragment>
   );

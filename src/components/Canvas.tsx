@@ -21,7 +21,9 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
         let ctx = c.getContext("2d");
         if(ctx)
         {
-            ctx.font = "30px Arial";
+            ctx.font = "24px Parisienne";
+            // ctx.font = "24px Sansita Swashed";
+            // ctx.font = "24px Roboto Mono";
         }
 
         setContext(ctx);
