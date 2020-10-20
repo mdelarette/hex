@@ -178,6 +178,7 @@ export const defaultPatterns = ['#7dd1ff', '#a65a35'];
 const deck:Deck = {tiles:[
   { tile: tile_001, quantity: 3 },
   { tile: tile_014, quantity: 1 },
+  { tile: tuile2, quantity: 1 },
   { tile: tuile3, quantity: 1 },
   { tile: tuile4, quantity: 1 },
   { tile: tuile5, quantity: 1 },

@@ -3,6 +3,7 @@ import './App.css';
 
 import {useState, useEffect} from 'react';
 
+import { name, version } from "../package.json";
 
 import deck from '../src/data/tuile';
 import { defaultPatterns } from '../src/data/tuile';
@@ -27,7 +28,7 @@ const App: React.FC = () => {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-
+  
   const [tileSize, setTileSize] = useState(25);
 
   const [nextTile, setNextTile] = useState<Tile | null>(null);
@@ -35,14 +36,14 @@ const App: React.FC = () => {
 
   const [playfield, setPlayfield] = useState<Playfield>({tiles: []});
 
+  const [messages, setMessages] = useState<Map<string,string> | null>(null);
+
   useEffect(() => {
       console.log('Window initial size', window.innerWidth, window.innerHeight);
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
 
       let initialSize = computeSize({tiles:[]}, window.innerWidth, window.innerHeight);
-      
-      console.log('initial tile size', initialSize);
       setTileSize(initialSize);
 
   }, []);
@@ -67,7 +68,15 @@ const App: React.FC = () => {
     let tile = deck.tiles.find(x => x.tile.id === shuffledDeck[0]);
     let nextTile = tile ? tile.tile : null;
     
+    var newMessages = new Map([
+      [ "name", `${name} - ${version}` ],
+      [ "remainingTiles", `${shuffledDeck.length}` ]
+    ]);
+
+    console.log("initial messages", newMessages);
+
     setNextTile(nextTile);
+    setMessages(newMessages);
     setRemainingTiles(shuffledDeck);
 
   }, []);
@@ -75,17 +84,29 @@ const App: React.FC = () => {
 
   useEffect(() => {
     var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
-    console.log('isMobile ?', navigator.userAgent);
-    console.log('isMobile ?', navigator.userAgent.toLowerCase());
-    console.log('isMobile ?', navigator.userAgent.toLowerCase().match(/mobile/i));
+
     if (isMobile) {
       console.log('isMobile', true);
     } else {
       console.log('isMobile', false);
-    }
-    
+    }    
     console.log('maxTouchPoints ?', navigator.maxTouchPoints);
 }, []);
+
+
+useEffect(() => {
+
+  var newMessages = new Map([
+    [ "name", `${name} - ${version}` ],
+    [ "remainingTiles", `${remainingTiles.length}` ]
+  ]);
+
+  // var newMessages = new Map(messages as Map<string, string>);
+  // newMessages.set("remainingTiles", `${remainingTiles.length}`);
+
+
+  setMessages(newMessages);
+}, [remainingTiles.length]);
 
 
   const handleClick = (position:Point) => {    
@@ -180,8 +201,9 @@ const handleWheel = (delta:Number) => {
       {width && height && (
         <React.Fragment>
 
-          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} onWheel={null} playfield={playfield} tileSize={tileSize} />
-          <Canvas id={"foreground"} width={width} height={height} zIndex={1} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} />
+          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} onWheel={null} playfield={playfield} tileSize={tileSize} messages={null}/>
+          <Canvas id={"texts"} width={width} height={height} zIndex={1} nextTile={null} patterns={[]} onClick={null}  onWheel={null} playfield={null} tileSize={0} messages={messages}/>
+          <Canvas id={"foreground"} width={width} height={height} zIndex={2} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} messages={null}/>
         </React.Fragment>
       )}
     </React.Fragment>

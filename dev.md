@@ -11,3 +11,8 @@ npm install --save <name> → yarn add <name>
     <!-- https://www.html5canvastutorials.com/ -->
     <!-- https://www.html5rocks.com/en/tutorials/canvas/performance/ -->
     <!-- https://www.redblobgames.com/grids/hexagons/ -->
+
+## VERSIONNING
+
+use : yarn version --patch | --minor | --major
+yarn release

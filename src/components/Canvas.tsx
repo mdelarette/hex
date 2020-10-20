@@ -10,7 +10,7 @@ import {drawTile} from '../helpers/renderer';
 import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
 
 
-const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, playfield:Playfield|null, tileSize:number}> = ({id, width, height, zIndex, nextTile, patterns, onClick, onWheel, playfield, tileSize}) => {
+const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, playfield:Playfield|null, tileSize:number, messages: Map<string,string> | null}> = ({id, width, height, zIndex, nextTile, patterns, onClick, onWheel, playfield, tileSize, messages}) => {
     
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
@@ -25,12 +25,12 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
         }
 
         setContext(ctx);
-    }, []);
+    }, [id]);
 
 
-    useEffect(() => {
-        console.log('Canvas size', width, height);
-    }, [width, height]);
+    // useEffect(() => {
+    //     console.log('Canvas size', width, height);
+    // }, [width, height]);
     
     
     useEffect(() => {        
@@ -43,7 +43,7 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             }
         }
 
-    }, [mousePos, width, height, context, nextTile]);
+    }, [mousePos, width, height, context, nextTile, patterns, tileSize]);
 
 
     useEffect(() => {       
@@ -56,7 +56,7 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             }
         } 
 
-    }, [context]);
+    }, [id, context]);
     
 
     useEffect(() => {       
@@ -72,8 +72,39 @@ const Canvas: React.FC<{id:string, width:number, height:number, zIndex:number, n
             // context.fillText("fillText", (width - measureText.width) / 2, height - 30);
         } 
 
-    }, [playfield, tileSize]);
+    }, [playfield, context, width, height, tileSize, patterns]);
     
+    useEffect(() => {       
+        if(messages && context)
+        {
+            let name = messages.get("name");
+            let remainingTiles = messages.get("remainingTiles");
+
+            console.log("useEffect messages name", name);
+            console.log("useEffect messages remainingTiles", remainingTiles);
+
+            context.clearRect(0,0,width,height);
+            
+            if(name)
+            {
+                context.fillText(name, 0, 30);
+            }
+            if(remainingTiles)
+            {
+                let measureText = context.measureText(remainingTiles);
+                context.fillText(remainingTiles, (width - measureText.width), 30);
+            }
+            // context.fillText("fillText", (width - measureText.width) / 2, height - 30);
+
+            // let measureText = context.measureText("Remaining tile 4");
+            // context.strokeText("Remaining tile 4", (width - measureText.width) / 2, 30);
+            
+            // measureText = context.measureText("fillText");
+            // context.fillText("fillText", (width - measureText.width) / 2, height - 30);
+        } 
+
+    }, [messages, context, width, height]);
+
 
     const handleMouseMove = (event:React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         event.preventDefault();

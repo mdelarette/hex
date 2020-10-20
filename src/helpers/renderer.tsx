@@ -9,14 +9,12 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 
   if(!tile)
   {
-    console.log("drawTile => drawFilledHex", tile);
     drawFilledHex(ctx, position, size, "red");
     return;
   }
 
   if(!tile.edges)
   {
-    console.log("drawTile => drawFilledHex", tile);
     drawFilledHex(ctx, position, size, patterns[tile.center]);
     return;
   }
