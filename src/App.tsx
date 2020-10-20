@@ -7,17 +7,15 @@ import {useState, useEffect} from 'react';
 import deck from '../src/data/tuile';
 import { defaultPatterns } from '../src/data/tuile';
 
-import { shuffleArray } from './data/deck';
-import { rotateArray } from './data/deck';
+import { shuffleArray, rotateArray } from './helpers/deck';
 
-import { pixel_to_pointy_hex } from '../src/helpers/renderer';
-import { computeSize } from '../src/helpers/renderer';
+import { computeSize, pixel_to_pointy_hex } from '../src/helpers/renderer';
 
 
 
 import Canvas from './components/Canvas';
 
-import { Tile, Point, Playfield, TileWithCoordinates } from './types/tile';
+import { Tile, Point, Playfield } from './types/tile';
 
 
 let neighborhood = [

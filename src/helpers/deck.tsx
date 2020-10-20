@@ -1,4 +1,4 @@
-export function shuffleArray(array) {
+export function shuffleArray(array:any) {
   for (var i = array.length - 1; i > 0; i--) {
     // Generate random number
     var j = Math.floor(Math.random() * (i + 1));
@@ -12,7 +12,7 @@ export function shuffleArray(array) {
 }
 
 // https://medium.com/javascript-in-plain-english/algorithms-101-rotate-array-in-javascript-three-solutions-260fbc923b64
-export function rotateArray(array, k) {
+export function rotateArray(array:any, k:number) {
   if (array.length > k) {
     array.unshift(...array.splice(-k));
   } else {
