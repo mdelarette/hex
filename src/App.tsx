@@ -1,6 +1,26 @@
 import React from 'react';
 import './App.css';
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreIcon from '@material-ui/icons/MoreVert';
+
+import TouchAppIcon from '@material-ui/icons/TouchAppTwoTone';
+import RotateLeftIcon from '@material-ui/icons/RotateLeftTwoTone';
+import RotateRightIcon from '@material-ui/icons/RotateRightTwoTone';
+
 import {useState, useEffect} from 'react';
 
 import { name, version } from "../package.json";
@@ -23,7 +43,37 @@ let neighborhood = [
 	{q: +1, r: 0},	{q: +1, r: -1},	{q: 0, r: -1}, {q: -1, r: 0}, {q: -1, r: +1}, {q: 0, r: +1},
 ];
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+
+    appBar: {
+      top: 'auto',
+      bottom: 0,
+    },
+    grow: {
+      flexGrow: 1,
+    },
+
+  }),
+);
+
+
 const App: React.FC = () => {
+
+  const classes = useStyles();
+
+  const [touchMode, setTouchMode] = useState(navigator.maxTouchPoints > 0);
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -147,6 +197,14 @@ useEffect(() => {
   setMessages(newMessages);
 }, [remainingTiles.length]);
 
+const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+  setAnchorEl(event.currentTarget);
+};
+
+const handleCloseMenu = () => {
+  setAnchorEl(null);
+};
+
 
   const handleClick = (position:Point) => {    
     console.log("handleClick in app", position);
@@ -176,16 +234,11 @@ useEffect(() => {
 			let neighbor = false;
 			do {
         let checkCoordinates = {q: coordinates.q + neighborhood[counter].q, r: coordinates.r + neighborhood[counter].r };
-        
-				console.warn("checkCoordinates : ", counter, checkCoordinates);
-        neighbor = playfield.tiles.find(t => t.coordinates.q === checkCoordinates.q && t.coordinates.r === checkCoordinates.r) !== undefined ;	
-        
-				console.warn("neighbor : ", counter, neighbor);
+        neighbor = playfield.tiles.find(t => t.coordinates.q === checkCoordinates.q && t.coordinates.r === checkCoordinates.r) !== undefined ;
 				counter++;
 			} while (!neighbor && (counter < neighborhood.length));
 			if(!neighbor)
 			{
-				console.warn("No neighbor : ", coordinates);
 				return;
 			}
 		}
@@ -200,14 +253,14 @@ useEffect(() => {
       const newNextTile = deck.tiles.find(x => x.tile.id === newRemainingTiles[0])?.tile;
       
       setNextTile(newNextTile ? newNextTile : null);
-      console.log('newNextTile', newNextTile);
+      // console.log('newNextTile', newNextTile);
     }
     else {
       setNextTile(null);
     }
 		
-		console.log('newRemainingTiles', newRemainingTiles);
-		console.log('newPlayfield', newPlayfield);
+		// console.log('newRemainingTiles', newRemainingTiles);
+		// console.log('newPlayfield', newPlayfield);
 		
 		let newSize = computeSize(newPlayfield, width, height);
     
@@ -223,6 +276,12 @@ const handleWheel = (delta:Number) => {
   if(!nextTile)
   {
     console.log("No tile to rotate");
+    return;
+  }
+
+  if(!nextTile.edges)
+  {
+    console.log("Tile as no edges");
     return;
   }
 
@@ -247,6 +306,49 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
 
   return (
     <React.Fragment>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+
+            <div>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClickMenu}>
+              <MenuIcon />
+            </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={handleCloseMenu}>New game</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Undo</MenuItem>
+              </Menu>
+          </div>  
+
+            <Typography variant="h6" className={classes.title}>
+            {`${name} - ${version}`}
+            </Typography>
+
+            
+
+            {touchMode && (            
+              <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="touchApp">
+                <TouchAppIcon /> {navigator.maxTouchPoints}
+              </IconButton>            
+            )}
+            
+            {!touchMode && (            
+              <IconButton edge="end" className={classes.menuButton} color="secondary" aria-label="touchApp">
+                <TouchAppIcon />
+              </IconButton>            
+            )}
+
+          </Toolbar>
+        </AppBar>
+      </div>
+
+
       {width && height && (
         <div onKeyUpCapture={handleKeyUpCapture}>
 
@@ -255,6 +357,25 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
           <Canvas id={"foreground"} width={width} height={height} zIndex={2} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} messages={null}/>
         </div>
       )}
+
+        
+      {touchMode && (
+        <AppBar position="fixed" color="primary" className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="rotate left">
+              <RotateLeftIcon />
+            </IconButton>
+            <div className={classes.grow} />
+              NextTile
+            <div className={classes.grow} />
+            <IconButton edge="end" color="inherit" aria-label="rotate right">
+              <RotateRightIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>      
+      )} 
+        
+
     </React.Fragment>
   );
 }
