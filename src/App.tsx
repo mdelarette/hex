@@ -18,6 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import TouchAppIcon from '@material-ui/icons/TouchAppTwoTone';
+import MouseIcon from '@material-ui/icons/MouseTwoTone';
 import RotateLeftIcon from '@material-ui/icons/RotateLeftTwoTone';
 import RotateRightIcon from '@material-ui/icons/RotateRightTwoTone';
 
@@ -30,18 +31,19 @@ import { defaultPatterns } from '../src/data/tuile';
 
 import { shuffleArray, rotateArray } from './helpers/deck';
 
-import { computeSize, pixel_to_pointy_hex } from '../src/helpers/renderer';
+import { computeSize, pixel_to_pointy_hex, neighborhood } from '../src/helpers/renderer';
 
 
 
-import Canvas from './components/Canvas';
+import BackgroundCanvas from './components/BackgroundCanvas';
+import ForegroundCanvas from './components/ForegroundCanvas';
+import MessagesCanvas from './components/MessagesCanvas';
+import TouchHelperCanvas from './components/TouchHelperCanvas';
+
 
 import { Tile, Point, Playfield } from './types/tile';
 
 
-let neighborhood = [
-	{q: +1, r: 0},	{q: +1, r: -1},	{q: 0, r: -1}, {q: -1, r: 0}, {q: -1, r: +1}, {q: 0, r: +1},
-];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,6 +63,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     grow: {
       flexGrow: 1,
+    },
+
+    canvasesContainer: {
+      position: 'absolute'
     },
 
   }),
@@ -88,10 +94,27 @@ const App: React.FC = () => {
 
   const [messages, setMessages] = useState<Map<string,string> | null>(null);
 
-  useEffect(() => {
+  useEffect(() => {    
       console.log('Window initial size', window.innerWidth, window.innerHeight);
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
+
+      let initialWidth = window.innerWidth -2; //-2 for border
+      let initialHeight = window.innerHeight -2; //-2 for border
+
+      let topBar = document.getElementById('topBar');
+      if(topBar)
+      {
+        initialHeight = initialHeight - topBar.scrollHeight;
+      }
+      let bottomBar = document.getElementById('bottomBar');
+      if(bottomBar)
+      {
+        initialHeight = initialHeight - bottomBar.scrollHeight;
+      }
+
+      console.log('Canvas initial size', initialWidth, initialHeight);
+
+      setWidth(initialWidth);
+      setHeight(initialHeight);
 
       let initialSize = computeSize({tiles:[]}, window.innerWidth, window.innerHeight);
       setTileSize(initialSize);
@@ -132,16 +155,16 @@ const App: React.FC = () => {
   }, []);
 
 
-  useEffect(() => {
-    var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
+//   useEffect(() => {
+//     var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
 
-    if (isMobile) {
-      console.log('isMobile', true);
-    } else {
-      console.log('isMobile', false);
-    }    
-    console.log('maxTouchPoints ?', navigator.maxTouchPoints);
-}, []);
+//     if (isMobile) {
+//       console.log('isMobile', true);
+//     } else {
+//       console.log('isMobile', false);
+//     }    
+//     console.log('maxTouchPoints ?', navigator.maxTouchPoints);
+// }, []);
 
 
 // const handleCtrlZ = () => {
@@ -307,7 +330,7 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar id={"topBar"} position="static">
           <Toolbar>
 
             <div>
@@ -339,28 +362,32 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
             )}
             
             {!touchMode && (            
-              <IconButton edge="end" className={classes.menuButton} color="secondary" aria-label="touchApp">
-                <TouchAppIcon />
+              <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="mouseApp">
+                <MouseIcon />
               </IconButton>            
             )}
 
           </Toolbar>
         </AppBar>
-      </div>
 
 
-      {width && height && (
-        <div onKeyUpCapture={handleKeyUpCapture}>
+        {width && height && (
+        <div id={"canvasesContainer"} className={classes.canvasesContainer} onKeyUpCapture={handleKeyUpCapture}>
 
-          <Canvas id={"background"} width={width} height={height} zIndex={0} nextTile={null} patterns={defaultPatterns} onClick={null} onWheel={null} playfield={playfield} tileSize={tileSize} messages={null}/>
-          <Canvas id={"texts"} width={width} height={height} zIndex={1} nextTile={null} patterns={[]} onClick={null}  onWheel={null} playfield={null} tileSize={0} messages={messages}/>
-          <Canvas id={"foreground"} width={width} height={height} zIndex={2} nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize} messages={null}/>
+          <BackgroundCanvas width={width} height={height}  patterns={defaultPatterns} playfield={playfield} tileSize={tileSize} />
+          <MessagesCanvas width={width} height={height} messages={messages}/>
+
+          {touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} />)}
+          {!touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} />)}
+          
+
+          <ForegroundCanvas width={width} height={height}  nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize}/>
         </div>
       )}
 
         
       {touchMode && (
-        <AppBar position="fixed" color="primary" className={classes.appBar}>
+        <AppBar id={"bottomBar"} position="fixed" color="primary" className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="rotate left">
               <RotateLeftIcon />
@@ -376,6 +403,8 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
       )} 
         
 
+
+      </div>
     </React.Fragment>
   );
 }

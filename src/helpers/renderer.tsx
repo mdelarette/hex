@@ -1,8 +1,13 @@
 
-import { Tile, Point, TileWithCoordinates, Playfield } from '../types/tile';
+import { Tile, Point, TileWithCoordinates, Coordinates, Playfield } from '../types/tile';
 
 const cosPiSur6 = Math.cos(Math.PI / 6);
 const sinPiSur6 = 1 / 2; // (1/2)
+
+
+export const neighborhood = [
+	{q: +1, r: 0},	{q: +1, r: -1},	{q: 0, r: -1}, {q: -1, r: 0}, {q: -1, r: +1}, {q: 0, r: +1},
+];
 
 export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]) {
   // console.log("drawTuile", tuile, " at ", x , "x", y);
@@ -110,18 +115,25 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 //   ctx.stroke();
 // }
 
-// function drawHex(ctx, x, y, l) {
-//   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x, y + l);
-//   ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x, y - l);
-//   ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
+function drawHex(ctx:CanvasRenderingContext2D, position:Point, size:number) {
+  
+  const x = position.x;
+  const y = position.y;
+  const l = size;
 
-//   ctx.strokeStyle = "orange";
-//   ctx.stroke();
-// }
+  ctx.beginPath();
+  ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
+  ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
+  ctx.lineTo(x, y + l);
+  ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
+  ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
+  ctx.lineTo(x, y - l);
+  ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
+  ctx.closePath();
+
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+}
 
 function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number, fillStyle:string) {
 
@@ -323,6 +335,14 @@ function pointy_hex_to_pixel(tuile:TileWithCoordinates, size:number) {
   var y = size * ((3 / 2) * tuile.coordinates.r);
   return { x, y };
 }
+function coordinates_to_pixel(coordinates:Coordinates, size:number) {
+  var x =
+    size *
+    (Math.sqrt(3) * coordinates.q +
+      (Math.sqrt(3) / 2) * coordinates.r);
+  var y = size * ((3 / 2) * coordinates.r);
+  return { x, y };
+}
 
 export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playField:Playfield, tileSize:number, patterns:string[]) {
   for (let i = 0; i < playField.tiles.length; i++) {
@@ -334,6 +354,21 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
       tileSize,
       tuileInPlay,
       patterns
+    );
+  }
+}
+
+
+
+
+export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number) {
+  for (let i = 0; i < playFieldNeighborhood.length; i++) {
+    let coordinates = playFieldNeighborhood[i];
+    var pos = coordinates_to_pixel(coordinates, tileSize);
+    drawHex(
+      ctx,
+      { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
+      tileSize
     );
   }
 }
