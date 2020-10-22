@@ -109,6 +109,12 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.fill();
 }
 
+
+export function drawNextTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]) {
+  drawShadowedHex(ctx, position, size);
+  drawTile(ctx , position, size, tile, patterns);
+}
+
 // function drawCircle(ctx, x, y, l) {
 //   ctx.beginPath();
 //   ctx.arc(x, y, l, 0, 2 * Math.PI);
@@ -133,6 +139,32 @@ function drawHex(ctx:CanvasRenderingContext2D, position:Point, size:number) {
 
   ctx.strokeStyle = "black";
   ctx.stroke();
+}
+
+function drawShadowedHex(ctx:CanvasRenderingContext2D, position:Point, size:number) {
+  
+  const x = position.x;
+  const y = position.y;
+  const l = size;
+
+  ctx.beginPath();
+  ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
+  ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
+  ctx.lineTo(x, y + l);
+  ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
+  ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
+  ctx.lineTo(x, y - l);
+  ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
+  ctx.closePath();
+
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = "black";
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+  ctx.fillStyle = "";
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  
 }
 
 function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number, fillStyle:string) {

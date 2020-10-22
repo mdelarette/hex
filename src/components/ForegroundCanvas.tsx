@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 
 
 import { Tile } from '../types/tile';
-import {drawTile} from '../helpers/renderer';
+import {drawTile , drawNextTile} from '../helpers/renderer';
 
 
 const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number}> = ({width, height, nextTile, patterns, onClick, onWheel, tileSize}) => {
@@ -31,7 +31,8 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
             context.clearRect(0,0,width,height);
             if(nextTile)
             {
-                drawTile(context, mousePos, tileSize, nextTile, patterns);
+                // drawTile(context, mousePos, tileSize, nextTile, patterns);
+                drawNextTile(context, mousePos, tileSize, nextTile, patterns);
             }
         }
 

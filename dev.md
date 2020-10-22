@@ -15,4 +15,4 @@ npm install --save <name> → yarn add <name>
 ## VERSIONNING
 
 use : yarn version --patch | --minor | --major
-yarn release
+yarn release-patch
