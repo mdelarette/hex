@@ -169,29 +169,29 @@ const App: React.FC = () => {
 // }, []);
 
 
-// const handleCtrlZ = () => {
+const handleCtrlZ = () => {
   
-//   console.log("handleCtrlZ", playfield.tiles.length);
-//   if(playfield.tiles.length > 0)
-//   {		
+  console.log("handleCtrlZ", playfield.tiles.length);
+  if(playfield.tiles.length > 0)
+  {		
 
-//     let newPlayfield = {...playfield, tiles:[...playfield.tiles]};
+    let newPlayfield = {...playfield, tiles:[...playfield.tiles]};
  
 
-//     let newNextTile = newPlayfield.tiles.pop() as Tile;
+    let newNextTile = newPlayfield.tiles.pop() as Tile;
     
-//     let newRemainingTiles = [newNextTile.id, ...remainingTiles];
+    let newRemainingTiles = [newNextTile.id, ...remainingTiles];
     
     
-//     let newTileSize = computeSize(newPlayfield, width, height);
+    let newTileSize = computeSize(newPlayfield, width, height);
     
-//     setNextTile(newNextTile);
-//     setPlayfield(newPlayfield);
-//     setRemainingTiles(newRemainingTiles);
-//     setTileSize(newTileSize);
+    setNextTile(newNextTile);
+    setPlayfield(newPlayfield);
+    setRemainingTiles(newRemainingTiles);
+    setTileSize(newTileSize);
 
-//   }
-// }
+  }
+}
 
 // useEffect(() => {
 
@@ -222,13 +222,17 @@ useEffect(() => {
   setMessages(newMessages);
 }, [remainingTiles.length]);
 
-const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-  setAnchorEl(event.currentTarget);
-};
 
-const handleCloseMenu = () => {
-  setAnchorEl(null);
-};
+
+
+
+  const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
 
   const handleClick = (position:Point) => {    
@@ -328,19 +332,35 @@ const handleRotate = (delta: number) => {
   handleWheel(delta);
 }
 
-const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
+
+const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
   event.preventDefault();
   event.persist();
 
-  console.log("handleKeyUpCapture event", event);
+  console.log("handleKeyUp event", event);
+  console.log("handleKeyUp event", event.key);
 
+  var newMessages = new Map([
+    [ "name", `${event.key}` ],
+    [ "remainingTiles", `${remainingTiles.length}` ]
+  ]);
+  setMessages(newMessages);
+
+
+  if(event.key === 'z' && event.ctrlKey)
+  {		
+    handleCtrlZ();
+  }
+  if(event.key === 'Backspace')
+  {		
+    handleCtrlZ();
+    event.stopPropagation();
+  }
 }
-
-
 
   return (
     <React.Fragment>
-      <div className={classes.root}>
+      <div className={classes.root} onKeyUp={handleKeyUp} tabIndex={0}>
         <AppBar id={"topBar"} position="static">
           <Toolbar>
 
@@ -383,7 +403,7 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
 
 
         {width && height && (
-        <div id={"canvasesContainer"} className={classes.canvasesContainer} onKeyUpCapture={handleKeyUpCapture}>
+        <div id={"canvasesContainer"} className={classes.canvasesContainer}>
 
           <BackgroundCanvas width={width} height={height}  patterns={defaultPatterns} playfield={playfield} tileSize={tileSize} />
           <MessagesCanvas width={width} height={height} messages={messages}/>

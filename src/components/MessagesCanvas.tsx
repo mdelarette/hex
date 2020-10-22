@@ -29,7 +29,7 @@ const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<strin
     useEffect(() => {       
         if(messages && context)
         {
-            // let name = messages.get("name");
+            let name = messages.get("name");
             let remainingTiles = messages.get("remainingTiles");
 
             // console.log("useEffect messages name", name);
@@ -37,10 +37,10 @@ const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<strin
 
             context.clearRect(0,0,width,height);
             
-            // if(name)
-            // {
-            //     context.fillText(name, 0, 30);
-            // }
+            if(name)
+            {
+                context.fillText(name, 0, 30);
+            }
             if(remainingTiles)
             {
                 let measureText = context.measureText(remainingTiles);

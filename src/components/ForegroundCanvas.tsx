@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 
 
 import { Tile } from '../types/tile';
-import {drawTile , drawNextTile} from '../helpers/renderer';
+import { drawNextTile } from '../helpers/renderer';
 
 
 const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number}> = ({width, height, nextTile, patterns, onClick, onWheel, tileSize}) => {
