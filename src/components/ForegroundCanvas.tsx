@@ -3,14 +3,11 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 
-import { Tile, Playfield } from '../types/tile';
-
-// import {drawSimpleTuile} from '../helpers/renderer';
+import { Tile } from '../types/tile';
 import {drawTile} from '../helpers/renderer';
-import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
 
 
-const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, playfield:Playfield|null, tileSize:number}> = ({width, height, nextTile, patterns, onClick, onWheel, playfield, tileSize}) => {
+const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number}> = ({width, height, nextTile, patterns, onClick, onWheel, tileSize}) => {
     
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
@@ -36,28 +33,20 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
             {
                 drawTile(context, mousePos, tileSize, nextTile, patterns);
             }
+            context.fillStyle = "black";
+            context.fillText(`${mousePos.x} x ${mousePos.y}`, 0, 30);
         }
 
     }, [mousePos, width, height, context, nextTile, patterns, tileSize]);
 
-    
-
-    useEffect(() => {       
-        if(playfield && context)
-        {
-            context.clearRect(0,0,width,height);
-            drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
-        } 
-
-    }, [playfield, context, width, height, tileSize, patterns]);
-    
+       
 
 
     const handleMouseMove = (event:React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         event.preventDefault();
         event.persist();
         
-        let newMousePos = {x: event.clientX, y: event.clientY};
+        let newMousePos = {x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY};
 
         setMousePos(newMousePos);
     }
@@ -65,8 +54,8 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
     const handleClick = (event:React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         event.preventDefault();
         event.persist();
-        
-        let newMousePos = {x: event.clientX, y: event.clientY};
+                
+        let newMousePos = {x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY};
         setMousePos(newMousePos);
         if(onClick)
         {

@@ -381,7 +381,7 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
           {!touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} />)}
           
 
-          <ForegroundCanvas width={width} height={height}  nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} playfield={null} tileSize={tileSize}/>
+          <ForegroundCanvas width={width} height={height}  nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
         </div>
       )}
 

@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react';
 
 import { Playfield } from '../types/tile';
 
-import {neighborhood, drawPlayFieldWithCoordinates, drawPlayFieldNeighborhood} from '../helpers/renderer';
+import {neighborhood, drawPlayFieldNeighborhood} from '../helpers/renderer';
 
 
 const TouchHelperCanvas: React.FC<{width:number, height:number, playfield:Playfield, tileSize:number}> = ({width, height, playfield, tileSize}) => {

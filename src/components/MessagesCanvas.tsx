@@ -2,17 +2,7 @@ import React from 'react';
 
 import {useState, useEffect} from 'react';
 
-
-import { Tile, Playfield } from '../types/tile';
-
-// import {drawSimpleTuile} from '../helpers/renderer';
-import {drawTile} from '../helpers/renderer';
-import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
-
-
 const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<string,string> | null}> = ({width, height, messages}) => {
-    
-    const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
