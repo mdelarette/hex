@@ -16,3 +16,6 @@ npm install --save <name> → yarn add <name>
 
 use : yarn version --patch | --minor | --major
 yarn release-patch
+
+to test :
+https://developers.google.com/web/tools/chrome-devtools/remote-debugging?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3

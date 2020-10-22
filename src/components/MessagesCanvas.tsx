@@ -39,7 +39,7 @@ const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<strin
             
             if(name)
             {
-                context.fillText(name, 0, 30);
+                // context.fillText(name, 0, 30);
             }
             if(remainingTiles)
             {

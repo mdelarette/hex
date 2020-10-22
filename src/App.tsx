@@ -125,48 +125,11 @@ const App: React.FC = () => {
 
 
   useEffect(() => {
-    console.log(deck);
 
-    let flattedDeck = deck.tiles.map(t => {
-      let a = [];
-      for(var i = 0; i<t.quantity; i++) {
-        a.push(t.tile.id);
-      }
-      return a;
-    }).flat();
-  
-  
-    let shuffledDeck = shuffleArray(flattedDeck);
-  
-    console.log("shuffledDeck", shuffledDeck);
-  
-    let tile = deck.tiles.find(x => x.tile.id === shuffledDeck[0]);
-    let nextTile = tile ? tile.tile : null;
-    
-    var newMessages = new Map([
-      [ "name", `${name} - ${version}` ],
-      [ "remainingTiles", `${shuffledDeck.length}` ]
-    ]);
-
-    console.log("initial messages", newMessages);
-
-    setNextTile(nextTile);
-    setMessages(newMessages);
-    setRemainingTiles(shuffledDeck);
+    handleNewGame();
 
   }, []);
 
-
-//   useEffect(() => {
-//     var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
-
-//     if (isMobile) {
-//       console.log('isMobile', true);
-//     } else {
-//       console.log('isMobile', false);
-//     }    
-//     console.log('maxTouchPoints ?', navigator.maxTouchPoints);
-// }, []);
 
 
 const handleCtrlZ = () => {
@@ -193,36 +156,42 @@ const handleCtrlZ = () => {
   }
 }
 
-// useEffect(() => {
-
-//   document.addEventListener('keyup', (e) => {	
-//     console.log("keyup", e);
-//     // Canceling last round
-//     if(e.key === 'z' && e.ctrlKey)
-//     {		
-
-//       handleCtrlZ();
-//     }
+const handleNewGame = () => {
   
-//   }); 
-// }, [handleCtrlZ]);
+  console.log("handleNewGame");
+
+  console.log(deck);
+
+  let flattedDeck = deck.tiles.map(t => {
+    let a = [];
+    for(var i = 0; i<t.quantity; i++) {
+      a.push(t.tile.id);
+    }
+    return a;
+  }).flat();
+
+
+  let shuffledDeck = shuffleArray(flattedDeck);
+
+  console.log("shuffledDeck", shuffledDeck);
+
+  let tile = deck.tiles.find(x => x.tile.id === shuffledDeck[0]);
+  let nextTile = tile ? tile.tile : null;
+  
+
+  setNextTile(nextTile);
+  setPlayfield({tiles: []});
+  setRemainingTiles(shuffledDeck);
+}
 
 
 useEffect(() => {
-
   var newMessages = new Map([
     [ "name", `${name} - ${version}` ],
     [ "remainingTiles", `${remainingTiles.length}` ]
   ]);
-
-  // var newMessages = new Map(messages as Map<string, string>);
-  // newMessages.set("remainingTiles", `${remainingTiles.length}`);
-
-
   setMessages(newMessages);
 }, [remainingTiles.length]);
-
-
 
 
 
@@ -361,24 +330,12 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
   return (
     <React.Fragment>
       <div className={classes.root} onKeyUp={handleKeyUp} tabIndex={0}>
-        <AppBar id={"topBar"} position="static">
+        <AppBar id={"topBar"} position="static" >
           <Toolbar>
 
-            <div>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClickMenu}>
               <MenuIcon />
             </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleCloseMenu}
-              >
-                <MenuItem onClick={handleCloseMenu}>New game</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>Undo</MenuItem>
-              </Menu>
-          </div>  
 
             <Typography variant="h6" className={classes.title}>
             {`${name} - ${version}`}
@@ -400,6 +357,17 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
 
           </Toolbar>
         </AppBar>
+
+        <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={() => {handleCloseMenu(); handleNewGame();}}>New game</MenuItem>
+                <MenuItem onClick={() => {handleCloseMenu(); handleCtrlZ();}}>Undo</MenuItem>
+        </Menu>
 
 
         {width && height && (
