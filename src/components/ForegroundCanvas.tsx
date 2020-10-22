@@ -33,8 +33,6 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
             {
                 drawTile(context, mousePos, tileSize, nextTile, patterns);
             }
-            context.fillStyle = "black";
-            context.fillText(`${mousePos.x} x ${mousePos.y}`, 0, 30);
         }
 
     }, [mousePos, width, height, context, nextTile, patterns, tileSize]);

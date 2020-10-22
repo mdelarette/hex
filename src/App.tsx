@@ -39,6 +39,7 @@ import BackgroundCanvas from './components/BackgroundCanvas';
 import ForegroundCanvas from './components/ForegroundCanvas';
 import MessagesCanvas from './components/MessagesCanvas';
 import TouchHelperCanvas from './components/TouchHelperCanvas';
+import NextTileCanvas from './components/NextTileCanvas';
 
 
 import { Tile, Point, Playfield } from './types/tile';
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       top: 'auto',
       bottom: 0,
+      '& > div': {alignItems: 'flex-start'}
     },
     grow: {
       flexGrow: 1,
@@ -316,6 +318,15 @@ const handleWheel = (delta:Number) => {
   setNextTile(newNextTile);
 }
 
+const handleRotateLeft = () => {
+  handleRotate(-1);
+}
+const handleRotateRight = () => {
+  handleRotate(1);
+}
+const handleRotate = (delta: number) => {  
+  handleWheel(delta);
+}
 
 const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
   event.preventDefault();
@@ -381,7 +392,7 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
           {!touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} />)}
           
 
-          <ForegroundCanvas width={width} height={height}  nextTile={nextTile} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
+          <ForegroundCanvas width={width} height={height}  nextTile={!touchMode ? nextTile : null} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
         </div>
       )}
 
@@ -389,13 +400,15 @@ const handleKeyUpCapture = (event:React.KeyboardEvent<HTMLElement>) => {
       {touchMode && (
         <AppBar id={"bottomBar"} position="fixed" color="primary" className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="rotate left">
+            <IconButton edge="start" color="inherit" aria-label="rotate left" onClick={handleRotateLeft} disabled={!nextTile}>
               <RotateLeftIcon />
             </IconButton>
             <div className={classes.grow} />
-              NextTile
+            <div>
+              <NextTileCanvas width={48} height={48} nextTile={nextTile} patterns={defaultPatterns} tileSize={24}/>
+            </div>
             <div className={classes.grow} />
-            <IconButton edge="end" color="inherit" aria-label="rotate right">
+            <IconButton edge="end" color="inherit" aria-label="rotate right" onClick={handleRotateRight} disabled={!nextTile}>
               <RotateRightIcon />
             </IconButton>
           </Toolbar>
