@@ -336,6 +336,7 @@ const handleRotate = (delta: number) => {
 const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
   event.preventDefault();
   event.persist();
+  event.stopPropagation();
 
   console.log("handleKeyUp event", event);
   console.log("handleKeyUp event", event.key);
@@ -354,7 +355,6 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
   if(event.key === 'Backspace')
   {		
     handleCtrlZ();
-    event.stopPropagation();
   }
 }
 
