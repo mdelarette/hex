@@ -118,15 +118,44 @@ const App: React.FC = () => {
       setWidth(initialWidth);
       setHeight(initialHeight);
 
-      let initialSize = computeSize({tiles:[]}, window.innerWidth, window.innerHeight);
+      let initialSize = computeSize({tiles:[]}, initialWidth, initialHeight);
+
+
+      let playfieldStringFromStorage = localStorage.getItem('playfield');
+      let remainingTilesStringFromStorage = localStorage.getItem('remainingTiles');
+      if(playfieldStringFromStorage && remainingTilesStringFromStorage){
+        let playfieldFromStorage = JSON.parse(playfieldStringFromStorage) as Playfield;
+        let remainingTilesFromStorage = JSON.parse(remainingTilesStringFromStorage) as number[];
+  
+        if(playfieldFromStorage && remainingTilesFromStorage){
+          console.log("restoring old game", playfieldStringFromStorage);
+  
+  
+          let tile = deck.tiles.find(x => x.tile.id === remainingTilesFromStorage[0]);
+          let nextTile = tile ? tile.tile : null;  
+        
+          setNextTile(nextTile);
+          setPlayfield(playfieldFromStorage);
+          setRemainingTiles(remainingTilesFromStorage);
+  
+          let newTileSize = computeSize(playfieldFromStorage, initialWidth, initialHeight);
+          
+          console.log("restoring old game newTileSize", newTileSize);
+
+          setTileSize(newTileSize);
+  
+          return;
+        }
+      }
+  
+      console.log("Start a brand new game");
+  
+      handleNewGame();
+
+
+
+
       setTileSize(initialSize);
-
-  }, []);
-
-
-  useEffect(() => {
-
-    handleNewGame();
 
   }, []);
 
@@ -158,10 +187,6 @@ const handleCtrlZ = () => {
 
 const handleNewGame = () => {
   
-  console.log("handleNewGame");
-
-  console.log(deck);
-
   let flattedDeck = deck.tiles.map(t => {
     let a = [];
     for(var i = 0; i<t.quantity; i++) {
@@ -170,14 +195,10 @@ const handleNewGame = () => {
     return a;
   }).flat();
 
-
   let shuffledDeck = shuffleArray(flattedDeck);
 
-  console.log("shuffledDeck", shuffledDeck);
-
   let tile = deck.tiles.find(x => x.tile.id === shuffledDeck[0]);
-  let nextTile = tile ? tile.tile : null;
-  
+  let nextTile = tile ? tile.tile : null;  
 
   setNextTile(nextTile);
   setPlayfield({tiles: []});
@@ -193,6 +214,15 @@ useEffect(() => {
   setMessages(newMessages);
 }, [remainingTiles.length]);
 
+
+
+  useEffect(() => {
+
+    localStorage.setItem('playfield', JSON.stringify(playfield));
+    localStorage.setItem('remainingTiles', JSON.stringify(remainingTiles));
+
+
+  }, [playfield, remainingTiles]);
 
 
   const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
