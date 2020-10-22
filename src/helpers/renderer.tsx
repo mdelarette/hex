@@ -9,7 +9,7 @@ export const neighborhood = [
 	{q: +1, r: 0},	{q: +1, r: -1},	{q: 0, r: -1}, {q: -1, r: 0}, {q: -1, r: +1}, {q: 0, r: +1},
 ];
 
-export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]) {
+export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]|null) {
   // console.log("drawTuile", tuile, " at ", x , "x", y);
 
   if(!tile)
@@ -20,7 +20,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 
   if(!tile.edges)
   {
-    drawFilledHex(ctx, position, size, patterns[tile.center]);
+    drawFilledHex(ctx, position, size, patterns ? patterns[tile.center] : "red");
     return;
   }
 
@@ -29,6 +29,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   const x = position.x;
   const y = position.y;
   const l = size;
+  
 
 
   // Gauche
@@ -39,8 +40,8 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
   ctx.closePath();
 
-  ctx.fillStyle = patterns[tile.edges[0]];
-
+  ctx.fillStyle = patterns ? patterns[tile.edges[0]] : "red";
+  
   ctx.fill();
 
   // Bas gauche
@@ -50,7 +51,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x, y + innerLength);
   ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
   ctx.closePath();
-  ctx.fillStyle = patterns[tile.edges[1]];
+  ctx.fillStyle = patterns ? patterns[tile.edges[1]] : "red";
   ctx.fill();
 
   // Bas droit
@@ -60,7 +61,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
   ctx.lineTo(x, y + innerLength);
   ctx.closePath();
-  ctx.fillStyle = patterns[tile.edges[2]];
+  ctx.fillStyle = patterns ? patterns[tile.edges[2]] : "red";
   ctx.fill();
 
   // Droite
@@ -70,7 +71,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
   ctx.closePath();
-  ctx.fillStyle = patterns[tile.edges[3]];
+  ctx.fillStyle = patterns ? patterns[tile.edges[3]] : "red";
   ctx.fill();
 
   // Haut droit
@@ -80,7 +81,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x, y - innerLength);
   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
   ctx.closePath();
-  ctx.fillStyle = patterns[tile.edges[4]];
+  ctx.fillStyle = patterns ? patterns[tile.edges[4]] : "red";
   ctx.fill();
 
   // Haut gauche
@@ -90,7 +91,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
   ctx.lineTo(x, y - innerLength);
   ctx.closePath();
-  ctx.fillStyle = patterns[tile.edges[5]];
+  ctx.fillStyle = patterns ? patterns[tile.edges[5]] : "red";
   ctx.fill();
 
   // Hexagone central
@@ -104,13 +105,13 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
   ctx.closePath();
 
-  ctx.fillStyle = patterns[tile.center];
+  ctx.fillStyle = patterns ? patterns[tile.center] : "red";
 
   ctx.fill();
 }
 
 
-export function drawNextTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]) {
+export function drawNextTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]|null) {
   drawShadowedHex(ctx, position, size);
   drawTile(ctx , position, size, tile, patterns);
 }
@@ -393,7 +394,7 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
 
 
 
-export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number) {
+export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|null, patterns:string[] | null) {
   for (let i = 0; i < playFieldNeighborhood.length; i++) {
     let coordinates = playFieldNeighborhood[i];
     var pos = coordinates_to_pixel(coordinates, tileSize);
@@ -402,6 +403,17 @@ export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFiel
       { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
       tileSize
     );
+    if(nextTile)
+    {
+      drawNextTile(
+        ctx,
+        { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
+        tileSize*0.75,
+        nextTile,
+        patterns
+      );
+
+    }
   }
 }
 
