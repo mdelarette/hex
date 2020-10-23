@@ -22,7 +22,11 @@ import MouseIcon from '@material-ui/icons/MouseTwoTone';
 import RotateLeftIcon from '@material-ui/icons/RotateLeftTwoTone';
 import RotateRightIcon from '@material-ui/icons/RotateRightTwoTone';
 
+// HOOKS
 import {useState, useEffect} from 'react';
+
+// CUSTOM HOOKS
+import useWindowSize from "../src/utils/useWindowSize";
 
 import { name, version } from "../package.json";
 
@@ -42,7 +46,7 @@ import TouchHelperCanvas from './components/TouchHelperCanvas';
 import NextTileCanvas from './components/NextTileCanvas';
 
 
-import { Tile, Point, Playfield } from './types/tile';
+import { Tile, Point, Playfield, Dimension } from './types/tile';
 
 
 
@@ -79,13 +83,13 @@ const App: React.FC = () => {
 
   const classes = useStyles();
 
-  const [touchMode, setTouchMode] = useState(navigator.maxTouchPoints > 0);
+  const [touchMode] = useState<boolean>(navigator.maxTouchPoints > 0);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const { windowInnerWidth, windowInnerHeight } = useWindowSize();
 
+  const [canvasSize, setCanvasSize] = useState<Dimension>({width:0, height:0});
   
   const [tileSize, setTileSize] = useState(25);
 
@@ -95,6 +99,9 @@ const App: React.FC = () => {
   const [playfield, setPlayfield] = useState<Playfield>({tiles: []});
 
   const [messages, setMessages] = useState<Map<string,string> | null>(null);
+
+
+
 
   useEffect(() => {    
       console.log('Window initial size', window.innerWidth, window.innerHeight);
@@ -115,50 +122,68 @@ const App: React.FC = () => {
 
       console.log('Canvas initial size', initialWidth, initialHeight);
 
-      setWidth(initialWidth);
-      setHeight(initialHeight);
+      setCanvasSize({width: initialWidth, height: initialHeight});
 
-      let initialSize = computeSize({tiles:[]}, initialWidth, initialHeight);
+      let initialSize = computeSize({tiles:[]}, {width: initialWidth, height: initialHeight});
 
-
-      let playfieldStringFromStorage = localStorage.getItem('playfield');
-      let remainingTilesStringFromStorage = localStorage.getItem('remainingTiles');
-      if(playfieldStringFromStorage && remainingTilesStringFromStorage){
-        let playfieldFromStorage = JSON.parse(playfieldStringFromStorage) as Playfield;
-        let remainingTilesFromStorage = JSON.parse(remainingTilesStringFromStorage) as number[];
-  
-        if(playfieldFromStorage && remainingTilesFromStorage){
-          console.log("restoring old game", playfieldStringFromStorage);
-  
-  
-          let tile = deck.tiles.find(x => x.tile.id === remainingTilesFromStorage[0]);
-          let nextTile = tile ? tile.tile : null;  
-        
-          setNextTile(nextTile);
-          setPlayfield(playfieldFromStorage);
-          setRemainingTiles(remainingTilesFromStorage);
-  
-          let newTileSize = computeSize(playfieldFromStorage, initialWidth, initialHeight);
+      let versionFromStorage = localStorage.getItem('version');
+      if(version === versionFromStorage)
+      {
+        let playfieldStringFromStorage = localStorage.getItem('playfield');
+        let remainingTilesStringFromStorage = localStorage.getItem('remainingTiles');
+        if(playfieldStringFromStorage && remainingTilesStringFromStorage){
+          let playfieldFromStorage = JSON.parse(playfieldStringFromStorage) as Playfield;
+          let remainingTilesFromStorage = JSON.parse(remainingTilesStringFromStorage) as number[];
+    
+          if(playfieldFromStorage && remainingTilesFromStorage){
+            console.log("restoring old game", playfieldStringFromStorage);
+    
+    
+            let tile = deck.tiles.find(x => x.tile.id === remainingTilesFromStorage[0]);
+            let nextTile = tile ? tile.tile : null;  
           
-          console.log("restoring old game newTileSize", newTileSize);
-
-          setTileSize(newTileSize);
+            setNextTile(nextTile);
+            setPlayfield(playfieldFromStorage);
+            setRemainingTiles(remainingTilesFromStorage);
+    
+            let newTileSize = computeSize(playfieldFromStorage, {width: initialWidth, height: initialHeight});
+            
+            console.log("restoring old game newTileSize", newTileSize);
   
-          return;
+            setTileSize(newTileSize);
+            
+            return;
+          }
         }
-      }
-  
-      console.log("Start a brand new game");
-  
+      }      
+      
       handleNewGame();
-
-
-
-
       setTileSize(initialSize);
-
   }, []);
 
+
+  useEffect(() => {        
+    let newWidth = windowInnerWidth -2; //-2 for border
+    let newHeight = windowInnerHeight -2; //-2 for border
+
+    let topBar = document.getElementById('topBar');
+    if(topBar)
+    {
+      newHeight = newHeight - topBar.scrollHeight;
+    }
+    let bottomBar = document.getElementById('bottomBar');
+    if(bottomBar)
+    {
+      newHeight = newHeight - bottomBar.scrollHeight;
+    }    
+    setCanvasSize({width: newWidth, height: newHeight});
+  }, [windowInnerWidth, windowInnerHeight]);
+
+
+  useEffect(() => {
+    let newTileSize = computeSize(playfield, canvasSize);  
+    setTileSize(newTileSize);
+  }, [canvasSize, playfield]);
 
 
 const handleCtrlZ = () => {
@@ -175,12 +200,12 @@ const handleCtrlZ = () => {
     let newRemainingTiles = [newNextTile.id, ...remainingTiles];
     
     
-    let newTileSize = computeSize(newPlayfield, width, height);
+    // let newTileSize = computeSize(newPlayfield, canvasSize);
     
     setNextTile(newNextTile);
     setPlayfield(newPlayfield);
     setRemainingTiles(newRemainingTiles);
-    setTileSize(newTileSize);
+    // setTileSize(newTileSize);
 
   }
 }
@@ -218,9 +243,9 @@ useEffect(() => {
 
   useEffect(() => {
 
+    localStorage.setItem('version', JSON.stringify(version));
     localStorage.setItem('playfield', JSON.stringify(playfield));
-    localStorage.setItem('remainingTiles', JSON.stringify(remainingTiles));
-
+    localStorage.setItem('remainingTiles', JSON.stringify(remainingTiles));    
 
   }, [playfield, remainingTiles]);
 
@@ -245,7 +270,7 @@ useEffect(() => {
     
 		var coordinates = {q: 0, r: 0};
 		if(playfield.tiles.length !== 0){
-			coordinates = pixel_to_pointy_hex({x: position.x - width/2, y: position.y - height/2}, tileSize);
+			coordinates = pixel_to_pointy_hex({x: position.x - canvasSize.width/2, y: position.y - canvasSize.height/2}, tileSize);
 		}
 		
 		// Test that space is free
@@ -290,9 +315,9 @@ useEffect(() => {
 		// console.log('newRemainingTiles', newRemainingTiles);
 		// console.log('newPlayfield', newPlayfield);
 		
-		let newSize = computeSize(newPlayfield, width, height);
+		// let newSize = computeSize(newPlayfield, canvasSize);
     
-    setTileSize(newSize);
+    // setTileSize(newSize);
     setPlayfield(newPlayfield);
     setRemainingTiles(newRemainingTiles);
 }
@@ -400,17 +425,17 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
         </Menu>
 
 
-        {width && height && (
+        {canvasSize.width && canvasSize.height && (
         <div id={"canvasesContainer"} className={classes.canvasesContainer}>
 
-          <BackgroundCanvas width={width} height={height}  patterns={defaultPatterns} playfield={playfield} tileSize={tileSize} />
-          <MessagesCanvas width={width} height={height} messages={messages}/>
+          <BackgroundCanvas size={canvasSize}  patterns={defaultPatterns} playfield={playfield} tileSize={tileSize} />
+          <MessagesCanvas size={canvasSize} messages={messages}/>
 
-          {touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} nextTile={nextTile} patterns={defaultPatterns}/>)}
-          {!touchMode && (<TouchHelperCanvas width={width} height={height} playfield={playfield} tileSize={tileSize} nextTile={null} patterns={null} />)}
+          {touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={nextTile} patterns={defaultPatterns}/>)}
+          {!touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={null} patterns={null} />)}
           
 
-          <ForegroundCanvas width={width} height={height}  nextTile={!touchMode ? nextTile : null} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
+          <ForegroundCanvas size={canvasSize}  nextTile={!touchMode ? nextTile : null} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
         </div>
       )}
 
@@ -423,7 +448,7 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
             </IconButton>
             <div className={classes.grow} />
             <div>
-              <NextTileCanvas width={48} height={48} nextTile={nextTile} patterns={defaultPatterns} tileSize={24}/>
+              <NextTileCanvas size={{width:48, height:48}} nextTile={nextTile} patterns={defaultPatterns} tileSize={24}/>
             </div>
             <div className={classes.grow} />
             <IconButton edge="end" color="inherit" aria-label="rotate right" onClick={handleRotateRight} disabled={!nextTile}>

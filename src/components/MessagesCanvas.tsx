@@ -2,7 +2,9 @@ import React from 'react';
 
 import {useState, useEffect} from 'react';
 
-const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<string,string> | null}> = ({width, height, messages}) => {
+import { Dimension } from '../types/tile';
+
+const MessagesCanvas: React.FC<{size:Dimension, messages: Map<string,string> | null}> = ({size, messages}) => {
     
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
@@ -35,7 +37,7 @@ const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<strin
             // console.log("useEffect messages name", name);
             console.log("useEffect messages remainingTiles", remainingTiles);
 
-            context.clearRect(0,0,width,height);
+            context.clearRect(0,0,size.width,size.height);
             
             if(name)
             {
@@ -44,18 +46,18 @@ const MessagesCanvas: React.FC<{width:number, height:number, messages: Map<strin
             if(remainingTiles)
             {
                 let measureText = context.measureText(remainingTiles);
-                context.fillText(remainingTiles, (width - measureText.width), 30);
+                context.fillText(remainingTiles, (size.width - measureText.width), 30);
             }
         } 
 
-    }, [messages, context, width, height]);
+    }, [messages, context, size]);
 
 
     return (
         <canvas
             id={"messages"} 
-            width={width} 
-            height={height} 
+            width={size.width} 
+            height={size.height} 
             style={{border:"1px solid #000000", position: "absolute", zIndex: 1}}
         />
     );

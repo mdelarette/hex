@@ -3,12 +3,12 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 
-import { Playfield, Tile } from '../types/tile';
+import { Playfield, Tile, Dimension } from '../types/tile';
 
 import {neighborhood, drawPlayFieldNeighborhood} from '../helpers/renderer';
 
 
-const TouchHelperCanvas: React.FC<{width:number, height:number, playfield:Playfield, tileSize:number, nextTile: Tile | null, patterns: string[] | null}> = ({width, height, playfield, tileSize, nextTile, patterns}) => {
+const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize:number, nextTile: Tile | null, patterns: string[] | null}> = ({size, playfield, tileSize, nextTile, patterns}) => {
        
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
@@ -61,7 +61,7 @@ const TouchHelperCanvas: React.FC<{width:number, height:number, playfield:Playfi
             let ctx = c.getContext("2d");
             if(ctx){
 
-                ctx.clearRect(0,0,width,height);
+                ctx.clearRect(0,0,size.width,size.height);
                 // context.fillStyle = "white";
                 // context.fillRect(0,0,width,height);
     
@@ -69,15 +69,15 @@ const TouchHelperCanvas: React.FC<{width:number, height:number, playfield:Playfi
             }
         } 
 
-    }, [playfield, context, width, height, tileSize, nextTile, patterns]);
+    }, [playfield, context, size, tileSize, nextTile, patterns]);
     
 
 
     return (
         <canvas
             id={"touchHelper"}
-            width={width} 
-            height={height} 
+            width={size.width} 
+            height={size.height} 
             style={{border:"1px solid #000000", position: "absolute", zIndex: 2}}
         />
     );

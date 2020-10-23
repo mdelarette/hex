@@ -3,11 +3,11 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 
-import { Tile } from '../types/tile';
+import { Tile, Dimension } from '../types/tile';
 import { drawNextTile } from '../helpers/renderer';
 
 
-const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number}> = ({width, height, nextTile, patterns, onClick, onWheel, tileSize}) => {
+const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, patterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number}> = ({size, nextTile, patterns, onClick, onWheel, tileSize}) => {
     
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
@@ -28,7 +28,7 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
     useEffect(() => {        
         if(context && mousePos.x && mousePos.y)
         {
-            context.clearRect(0,0,width,height);
+            context.clearRect(0,0,size.width,size.height);
             if(nextTile)
             {
                 // drawTile(context, mousePos, tileSize, nextTile, patterns);
@@ -36,7 +36,7 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
             }
         }
 
-    }, [mousePos, width, height, context, nextTile, patterns, tileSize]);
+    }, [mousePos, size, context, nextTile, patterns, tileSize]);
 
        
 
@@ -74,8 +74,8 @@ const ForegroundCanvas: React.FC<{width:number, height:number, nextTile: Tile | 
     return (
         <canvas
             id={"foreground"} 
-            width={width} 
-            height={height} 
+            width={size.width} 
+            height={size.height} 
             style={{border:"1px solid #000000", position: "absolute", zIndex: 3}}
 
 

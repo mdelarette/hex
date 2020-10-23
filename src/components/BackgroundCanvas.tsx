@@ -3,12 +3,12 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 
-import { Playfield } from '../types/tile';
+import { Playfield, Dimension } from '../types/tile';
 
 import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
 
 
-const BackgroundCanvas: React.FC<{width:number, height:number, patterns: string[], playfield:Playfield, tileSize:number}> = ({width, height, patterns, playfield, tileSize}) => {
+const BackgroundCanvas: React.FC<{size:Dimension, patterns: string[], playfield:Playfield, tileSize:number}> = ({size, patterns, playfield, tileSize}) => {
        
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
@@ -28,19 +28,19 @@ const BackgroundCanvas: React.FC<{width:number, height:number, patterns: string[
     useEffect(() => {       
         if(playfield && context)
         {
-            context.clearRect(0,0,width,height);
+            context.clearRect(0,0,size.width,size.height);
             drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
         } 
 
-    }, [playfield, context, width, height, tileSize, patterns]);
+    }, [playfield, context, size, tileSize, patterns]);
     
 
 
     return (
         <canvas
             id={"background"}
-            width={width} 
-            height={height} 
+            width={size.width} 
+            height={size.height} 
             style={{border:"1px solid #000000", position: "absolute", zIndex: 0}}
         />
     );
