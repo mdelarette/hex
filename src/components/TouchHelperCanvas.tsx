@@ -3,12 +3,12 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 
 
-import { Playfield, Tile, Dimension } from '../types/tile';
+import { Playfield, Tile, TileWithCoordinates, Dimension } from '../types/tile';
 
 import {neighborhood, drawPlayFieldNeighborhood} from '../helpers/renderer';
 
 
-const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize:number, nextTile: Tile | null, patterns: string[] | null}> = ({size, playfield, tileSize, nextTile, patterns}) => {
+const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize:number, nextTile: Tile | TileWithCoordinates | null, patterns: string[] | null}> = ({size, playfield, tileSize, nextTile, patterns}) => {
        
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 

@@ -428,7 +428,7 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
 
 
 
-export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|null, patterns:string[] | null) {
+export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|TileWithCoordinates|null, patterns:string[] | null) {
   
   const offset:Point = computeOffset({width: ctx.canvas.width, height: ctx.canvas.height}, playFieldNeighborhood, tileSize);
   
@@ -440,7 +440,7 @@ export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFiel
       { x: offset.x + pos.x, y:offset.y + pos.y},
       tileSize
     );
-    if(nextTile)
+    if(nextTile && !nextTile.hasOwnProperty("coordinates"))
     {
       drawNextTile(
         ctx,
@@ -449,6 +449,23 @@ export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFiel
         nextTile,
         patterns
       );
+
+    }    
+    if(nextTile && nextTile.hasOwnProperty("coordinates"))
+    {
+      let tileCoordinates = (nextTile as TileWithCoordinates).coordinates;
+  
+      if(tileCoordinates.q === coordinates.q && tileCoordinates.r === coordinates.r)
+      {
+        drawNextTile(
+          ctx,
+          { x: offset.x + pos.x, y:offset.y + pos.y},
+          tileSize,
+          nextTile,
+          patterns
+        );
+  
+      }
 
     }
   }

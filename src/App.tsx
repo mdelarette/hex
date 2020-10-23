@@ -43,7 +43,7 @@ import TouchHelperCanvas from './components/TouchHelperCanvas';
 import NextTileCanvas from './components/NextTileCanvas';
 
 
-import { Tile, Point, Playfield, Dimension } from './types/tile';
+import { Tile, TileWithCoordinates, Point, Playfield, Dimension } from './types/tile';
 
 
 
@@ -296,6 +296,25 @@ useEffect(() => {
 			}
 		}
 
+    if(touchMode)
+    {
+      if(nextTile.hasOwnProperty("coordinates"))
+      {
+        let nextTileCoordinates = (nextTile as TileWithCoordinates).coordinates;
+        if(nextTileCoordinates.q !== coordinates.q || nextTileCoordinates.r !== coordinates.r)
+        {
+          let newNextTile = { ...nextTile, coordinates:coordinates};
+          setNextTile(newNextTile);
+          return;
+        }
+      }
+      else {
+        let newNextTile = { ...nextTile, coordinates:coordinates};
+        setNextTile(newNextTile);
+        return;
+      }
+    }
+
 
 		let newPlayfield = {...playfield, tiles: [...playfield.tiles, {...nextTile as Tile, coordinates}]};
     
@@ -306,18 +325,10 @@ useEffect(() => {
       const newNextTile = deck.tiles.find(x => x.tile.id === newRemainingTiles[0])?.tile;
       
       setNextTile(newNextTile ? newNextTile : null);
-      // console.log('newNextTile', newNextTile);
     }
     else {
       setNextTile(null);
-    }
-		
-		// console.log('newRemainingTiles', newRemainingTiles);
-		// console.log('newPlayfield', newPlayfield);
-		
-		// let newSize = computeSize(newPlayfield, canvasSize);
-    
-    // setTileSize(newSize);
+    }		
     setPlayfield(newPlayfield);
     setRemainingTiles(newRemainingTiles);
 }
