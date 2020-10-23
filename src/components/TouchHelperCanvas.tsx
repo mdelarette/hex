@@ -52,11 +52,8 @@ const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize
                 });
             }
 
-            console.log('playfieldNeighborhood tileSize',tileSize,  playfieldNeighborhood);
-
             // Display neighborhood
 
-            console.log('context', context);
             let c:HTMLCanvasElement|null = document.getElementById("touchHelper") as HTMLCanvasElement;        
             let ctx = c.getContext("2d");
             if(ctx){

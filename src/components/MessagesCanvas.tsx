@@ -35,7 +35,7 @@ const MessagesCanvas: React.FC<{size:Dimension, messages: Map<string,string> | n
             let remainingTiles = messages.get("remainingTiles");
 
             // console.log("useEffect messages name", name);
-            console.log("useEffect messages remainingTiles", remainingTiles);
+            // console.log("useEffect messages remainingTiles", remainingTiles);
 
             context.clearRect(0,0,size.width,size.height);
             

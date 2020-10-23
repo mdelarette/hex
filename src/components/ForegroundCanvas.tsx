@@ -38,6 +38,19 @@ const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, pattern
 
     }, [mousePos, size, context, nextTile, patterns, tileSize]);
 
+    
+    // useEffect(() => {        
+    //     if(context && mousePos.x && mousePos.y)
+    //     {
+    //         context.clearRect(0,0,size.width,size.height);
+    //         if(nextTile)
+    //         {
+    //             // drawTile(context, mousePos, tileSize, nextTile, patterns);
+    //             drawNextTile(context, mousePos, tileSize, nextTile, patterns);
+    //         }
+    //     }
+
+    // }, [context, patterns]);
        
 
 

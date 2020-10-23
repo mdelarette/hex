@@ -9,7 +9,7 @@ export const neighborhood = [
 	{q: +1, r: 0},	{q: +1, r: -1},	{q: 0, r: -1}, {q: -1, r: 0}, {q: -1, r: +1}, {q: 0, r: +1},
 ];
 
-export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]|null) {
+export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:(string|CanvasPattern)[]|null) {
   // console.log("drawTuile", tuile, " at ", x , "x", y);
 
   if(!tile)
@@ -168,7 +168,7 @@ function drawShadowedHex(ctx:CanvasRenderingContext2D, position:Point, size:numb
   
 }
 
-function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number, fillStyle:string) {
+function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number, fillStyle:string|CanvasPattern) {
 
   const x = position.x;
   const y = position.y;
@@ -381,8 +381,6 @@ export function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], t
 
   const offset:Point = { x: canvasSize.width / 2, y:canvasSize.height / 2 };
 
-  console.log("computeOffset begin", offset);
-
   if(coordinates.length > 0)
   {
     let mMx = { min: Number.MAX_VALUE, max: Number.MIN_VALUE};
@@ -395,19 +393,14 @@ export function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], t
       mMy.min = Math.min(pos.y, mMy.min);
       mMy.max = Math.max(pos.y, mMy.max);
     }
-    console.log("computeOffset mMx", mMx);
-    console.log("computeOffset mMy", mMy);
 
     offset.x = offset.x - ((mMx.max + mMx.min)/2);
     offset.y = offset.y - ((mMy.max + mMy.min)/2);
   } 
-
-  console.log("computeOffset end", offset);
-
   return offset;
 }
 
-export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playField:Playfield, tileSize:number, patterns:string[]) {
+export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playField:Playfield, tileSize:number, patterns:(string|CanvasPattern)[]) {
 
   const offset:Point = computeOffset({width: ctx.canvas.width, height: ctx.canvas.height}, playField.tiles.map(tile => tile.coordinates), tileSize);
 

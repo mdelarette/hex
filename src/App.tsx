@@ -1,6 +1,10 @@
 import React from 'react';
 import './App.css';
 
+import blueImagePath from '../src/patterns/ocean.jpg'; // gives image path
+import brownImagePath from '../src/patterns/herbe.jpg'; // gives image path
+
+
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -43,7 +47,7 @@ import TouchHelperCanvas from './components/TouchHelperCanvas';
 import NextTileCanvas from './components/NextTileCanvas';
 
 
-import { Tile, TileWithCoordinates, Point, Playfield, Dimension } from './types/tile';
+import { Tile, TileWithCoordinates, Point, Playfield, Dimension, FieldType } from './types/tile';
 
 
 
@@ -95,7 +99,12 @@ const App: React.FC = () => {
 
   const [playfield, setPlayfield] = useState<Playfield>({tiles: []});
 
-  const [messages, setMessages] = useState<Map<string,string> | null>(null);
+  const [messages, setMessages] = useState<Map<string,string>>(new Map<string,string>());
+
+  
+  // const [images, setImages] = useState<Map<FieldType,HTMLImageElement>>(new Map<FieldType,HTMLImageElement>());
+  // const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
 
 
@@ -156,7 +165,22 @@ const App: React.FC = () => {
       
       handleNewGame();
       setTileSize(initialSize);
+
+
+      // Patterns initialisation
+      
+      console.log("Patterns initialisation");
+      let blueImage = new Image();
+      blueImage.id = FieldType.Water.toString();
+      blueImage.src = blueImagePath;
+      
+      blueImage.onload = handleLoadedImage;
+
+        
+      console.log("Patterns initialisation ?");
+
   }, []);
+
 
 
   useEffect(() => {        
@@ -247,6 +271,28 @@ useEffect(() => {
   }, [playfield, remainingTiles]);
 
 
+  const handleLoadedImage = (event:Event) => {
+
+    console.log("handleLoadedImage event", event, images);
+    // images.push(event.target as HTMLImageElement);
+
+    let newImages = [...images, (event.target as HTMLImageElement).id];
+    setImages(newImages);
+
+    if((event.target as HTMLImageElement).id === FieldType.Water.toString())
+    {
+      let brownImage = new Image();
+      brownImage.id = FieldType.Earth.toString();
+      brownImage.src = brownImagePath;
+      brownImage.onload= handleLoadedImage;
+    }
+    console.log("handleLoadedImage newImages", newImages);
+  }
+
+  useEffect(() => {
+    console.log("useEffect images", images);
+  }, [images]);
+
   const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -257,11 +303,9 @@ useEffect(() => {
 
 
   const handleClick = (position:Point) => {    
-    console.log("handleClick in app", position);
 
     if(!nextTile)
     {
-      console.log("No tile to add");
       return;
     }
     
@@ -277,7 +321,7 @@ useEffect(() => {
 		let inoccupied = playfield.tiles.find(t => t.coordinates.q === coordinates.q && t.coordinates.r === coordinates.r) === undefined;		
 		if(!inoccupied)
 		{
-			console.warn("Already something here : ", coordinates);
+			// console.warn("Already something here : ", coordinates);
 			return;
 		}
 		
@@ -335,17 +379,13 @@ useEffect(() => {
 
 
 const handleWheel = (delta:Number) => {    
-  console.log("handleWheel in app", delta);
-
   if(!nextTile)
   {
-    console.log("No tile to rotate");
     return;
   }
 
   if(!nextTile.edges)
   {
-    console.log("Tile as no edges");
     return;
   }
 
@@ -356,7 +396,6 @@ const handleWheel = (delta:Number) => {
 
   setNextTile(newNextTile);
 }
-
 const handleRotateLeft = () => {
   handleRotate(-1);
 }
@@ -439,7 +478,7 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
         {canvasSize.width && canvasSize.height && (
         <div id={"canvasesContainer"} className={classes.canvasesContainer}>
 
-          <BackgroundCanvas size={canvasSize}  patterns={defaultPatterns} playfield={playfield} tileSize={tileSize} />
+          <BackgroundCanvas size={canvasSize} defaultPatterns={defaultPatterns} playfield={playfield} tileSize={tileSize} images={images}/>
           <MessagesCanvas size={canvasSize} messages={messages}/>
 
           {touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={nextTile} patterns={defaultPatterns}/>)}

@@ -155,43 +155,6 @@ window.onload = () => {
       <!-- // so it can be saved as an image -->
       <!-- document.getElementById('myCanvas').src = dataURL; -->
 
-
-window.onresize = () => {
-
-	width = window.innerWidth - 8;
-	height = window.innerHeight - 8;
-	
-	size = computeSize(playFieldWithCoordinates, height);
-	
-	bg_canvas.width = width;
-	bg_canvas.height = height
-	
-	fg_canvas.width = width;
-	fg_canvas.height = height
-	
-	drawPlayFieldWithCoordinates(bgContext, playFieldWithCoordinates, size, patterns);
-}
-
-
-// Key listener
-document.addEventListener('keyup', (e) => {	
-	// Canceling last round
-	if(e.key === 'z' && e.ctrlKey && playFieldWithCoordinates.length > 0)
-	{		
-		tuile = playFieldWithCoordinates.pop();
-		delete tuile.coordinates;
-		
-		shuffledDeck = [tuile.id, ...shuffledDeck];
-		
-		bgContext.clearRect(0,0, width, height);
-		fgContext.clearRect(0,0, width, height);
-		
-		size = computeSize(playFieldWithCoordinates, height);
-		drawPlayFieldWithCoordinates(bgContext, playFieldWithCoordinates, size, patterns);
-		drawTuile(fgContext, mousePos.x, mousePos.y, size, tuile, patterns );
-	}
-
-});
 // Note, if more keys check, consider using Mouse trap :  https://github.com/ccampbell/mousetrap
 
 
