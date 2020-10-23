@@ -1,5 +1,5 @@
 
-import { Tile, Point, TileWithCoordinates, Coordinates, Playfield } from '../types/tile';
+import { Tile, Point, Dimension, TileWithCoordinates, Coordinates, Playfield } from '../types/tile';
 
 const cosPiSur6 = Math.cos(Math.PI / 6);
 const sinPiSur6 = 1 / 2; // (1/2)
@@ -377,13 +377,45 @@ function coordinates_to_pixel(coordinates:Coordinates, size:number) {
   return { x, y };
 }
 
+function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], tileSize:number) {
+
+  const offset:Point = { x: canvasSize.width / 2, y:canvasSize.height / 2 };
+
+  // console.log("computeOffset begin", offset);
+
+  if(coordinates.length > 0)
+  {
+    let mMx = { min: Number.MAX_VALUE, max: Number.MIN_VALUE};
+    let mMy = { min: Number.MAX_VALUE, max: Number.MIN_VALUE};
+    for(let i = 0; i<coordinates.length; i++ )
+    {
+      let pos = coordinates_to_pixel(coordinates[i], tileSize);
+      mMx.min = Math.min(pos.x, mMx.min);
+      mMx.max = Math.max(pos.x, mMx.max);
+      mMy.min = Math.min(pos.y, mMy.min);
+      mMy.max = Math.max(pos.y, mMy.max);
+    }
+
+    offset.x = offset.x + ((mMx.max + mMx.min) / 4);
+    offset.y = offset.y + ((mMy.max + mMy.min) / 4);
+  } 
+
+  // console.log("computeOffset end", offset);
+
+  return offset;
+}
+
 export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playField:Playfield, tileSize:number, patterns:string[]) {
+
+  const offset:Point = computeOffset({width: ctx.canvas.width, height: ctx.canvas.height}, playField.tiles.map(tile => tile.coordinates), tileSize);
+
+
   for (let i = 0; i < playField.tiles.length; i++) {
     let tuileInPlay = playField.tiles[i];
     var pos = pointy_hex_to_pixel(tuileInPlay, tileSize);
     drawTile(
       ctx,
-      { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
+      { x: offset.x + pos.x, y:offset.y + pos.y},
       tileSize,
       tuileInPlay,
       patterns
@@ -395,19 +427,22 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
 
 
 export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|null, patterns:string[] | null) {
+  
+  const offset:Point = computeOffset({width: ctx.canvas.width, height: ctx.canvas.height}, playFieldNeighborhood, tileSize);
+  
   for (let i = 0; i < playFieldNeighborhood.length; i++) {
     let coordinates = playFieldNeighborhood[i];
     var pos = coordinates_to_pixel(coordinates, tileSize);
     drawHex(
       ctx,
-      { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
+      { x: offset.x + pos.x, y:offset.y + pos.y},
       tileSize
     );
     if(nextTile)
     {
       drawNextTile(
         ctx,
-        { x: ctx.canvas.width / 2 + pos.x, y:ctx.canvas.height / 2 + pos.y},
+        { x: offset.x + pos.x, y:offset.y + pos.y},
         tileSize*0.75,
         nextTile,
         patterns
