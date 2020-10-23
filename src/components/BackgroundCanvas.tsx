@@ -8,7 +8,7 @@ import { Playfield, Dimension, FieldType } from '../types/tile';
 import {drawPlayFieldWithCoordinates} from '../helpers/renderer';
 
 
-const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], playfield:Playfield, tileSize:number, images:string[]}> = ({size, defaultPatterns, playfield, tileSize, images}) => {
+const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], playfield:Playfield, tileSize:number, images:HTMLImageElement[]}> = ({size, defaultPatterns, playfield, tileSize, images}) => {
        
     const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
@@ -26,24 +26,40 @@ const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], pla
 
         if(context)
         {
-            // let img = images.find(image => image.id === FieldType.Earth.toString());
-            // console.log("BackgroundCanvas img Earth", img);
-            // if(img)
-            // {
-            //     let p = context.createPattern(img, 'repeat');
-            //     console.log("BackgroundCanvas useEffect p", p);
+            let newPatterns = [...patterns];
 
-            //     if(p)
-            //     {
-            //         let newPatterns = [...patterns];
-            //         newPatterns[FieldType.Earth] = p;
-            //         setPatterns(newPatterns);
+            let img = images.find(image => image.id === FieldType.Earth.toString());
+            console.log("BackgroundCanvas img Earth", img);
+            if(img)
+            {
+                let p = context.createPattern(img, 'repeat');
+                console.log("BackgroundCanvas useEffect p", p);
 
-            //     }
-            // }
+                if(p)
+                {
+                    newPatterns[FieldType.Earth] = p;
+
+                }
+            }
+
+
+            let img2 = images.find(image => image.id === FieldType.Water.toString());
+            console.log("BackgroundCanvas img Water", img2);
+            if(img)
+            {
+                let p = context.createPattern(img, 'repeat');
+                console.log("BackgroundCanvas useEffect p", p);
+
+                if(p)
+                {
+                    newPatterns[FieldType.Water] = p;
+                }
+            }
+            setPatterns(newPatterns);
+
         }
 
-    }, [context, images]);
+    }, [context, images, patterns]);
 
 
     // useEffect(() => {
