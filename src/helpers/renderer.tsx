@@ -377,11 +377,11 @@ function coordinates_to_pixel(coordinates:Coordinates, size:number) {
   return { x, y };
 }
 
-function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], tileSize:number) {
+export function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], tileSize:number) {
 
   const offset:Point = { x: canvasSize.width / 2, y:canvasSize.height / 2 };
 
-  // console.log("computeOffset begin", offset);
+  console.log("computeOffset begin", offset);
 
   if(coordinates.length > 0)
   {
@@ -395,12 +395,14 @@ function computeOffset(canvasSize:Dimension, coordinates:Coordinates[], tileSize
       mMy.min = Math.min(pos.y, mMy.min);
       mMy.max = Math.max(pos.y, mMy.max);
     }
+    console.log("computeOffset mMx", mMx);
+    console.log("computeOffset mMy", mMy);
 
-    offset.x = offset.x + ((mMx.max + mMx.min) / 4);
-    offset.y = offset.y + ((mMy.max + mMy.min) / 4);
+    offset.x = offset.x - ((mMx.max + mMx.min)/2);
+    offset.y = offset.y - ((mMy.max + mMy.min)/2);
   } 
 
-  // console.log("computeOffset end", offset);
+  console.log("computeOffset end", offset);
 
   return offset;
 }

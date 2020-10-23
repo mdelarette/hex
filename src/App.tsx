@@ -32,7 +32,7 @@ import { defaultPatterns } from '../src/data/tuile';
 
 import { shuffleArray, rotateArray } from './helpers/deck';
 
-import { computeSize, pixel_to_pointy_hex, neighborhood } from '../src/helpers/renderer';
+import { computeSize, pixel_to_pointy_hex, neighborhood, computeOffset } from '../src/helpers/renderer';
 
 
 
@@ -267,7 +267,10 @@ useEffect(() => {
     
 		var coordinates = {q: 0, r: 0};
 		if(playfield.tiles.length !== 0){
-			coordinates = pixel_to_pointy_hex({x: position.x - canvasSize.width/2, y: position.y - canvasSize.height/2}, tileSize);
+
+      let offset = computeOffset(canvasSize, playfield.tiles.map(tile => tile.coordinates), tileSize);
+
+			coordinates = pixel_to_pointy_hex({x: position.x - offset.x, y: position.y - offset.y}, tileSize);
 		}
 		
 		// Test that space is free
