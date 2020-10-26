@@ -114,29 +114,29 @@ const App: React.FC = () => {
 
 
   useEffect(() => {    
-      const handleLoadedImage = (event:Event) => {
+      // const handleLoadedImage = (event:Event) => {
 
-        // console.log("handleLoadedImage event", event, images);
-        images.push(event.target as HTMLImageElement);
+      //   // console.log("handleLoadedImage event", event, images);
+      //   images.push(event.target as HTMLImageElement);
     
-        // let newImages = [...images, (event.target as HTMLImageElement).id];
-        // setImages(newImages);
+      //   // let newImages = [...images, (event.target as HTMLImageElement).id];
+      //   // setImages(newImages);
     
-        if((event.target as HTMLImageElement).id === FieldType.Water.toString())
-        {
-          let brownImage = new Image();
-          brownImage.id = FieldType.Earth.toString();
-          brownImage.src = brownImagePath;
-          brownImage.onload= handleLoadedImage;
-        }
+      //   if((event.target as HTMLImageElement).id === FieldType.Water.toString())
+      //   {
+      //     let brownImage = new Image();
+      //     brownImage.id = FieldType.Earth.toString();
+      //     brownImage.src = brownImagePath;
+      //     brownImage.onload= handleLoadedImage;
+      //   }
         
-        if((event.target as HTMLImageElement).id === FieldType.Earth.toString())
-        {
-          setImages([...images]);
-        }
-        // console.log("handleLoadedImage newImages", newImages);
-        console.log("handleLoadedImage images", images);
-      }
+      //   if((event.target as HTMLImageElement).id === FieldType.Earth.toString())
+      //   {
+      //     setImages([...images]);
+      //   }
+      //   // console.log("handleLoadedImage newImages", newImages);
+      //   console.log("handleLoadedImage images", images);
+      // }
 
 
       console.log('Window initial size', window.innerWidth, window.innerHeight);
