@@ -28,6 +28,7 @@ import {useState, useEffect} from 'react';
 
 // CUSTOM HOOKS
 import useWindowSize from "../src/utils/useWindowSize";
+import useImage from "../src/utils/useImage";
 
 import { name, version } from "../package.json";
 
@@ -103,15 +104,42 @@ const App: React.FC = () => {
 
   
   // const [images, setImages] = useState<Map<FieldType,HTMLImageElement>>(new Map<FieldType,HTMLImageElement>());
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [images, setImages] = useState<(HTMLImageElement|null)[]>(defaultPatterns.map(x => null));
   // const [images, setImages] = useState<string[]>([]);
 
 
 
+  const [blueImage, blueImageStatus] = useImage(blueImagePath);
+  const [brownImage, brownImageStatus] = useImage(brownImagePath);
+
+  useEffect(() => {
+
+    console.log("useEffect blueImage", blueImage, blueImageStatus);
 
 
+    if(blueImageStatus === 'loaded' && !images[FieldType.Water])
+    {
+      let newImages = [...images]
+      newImages[FieldType.Water] = blueImage as HTMLImageElement;
+      setImages(newImages);
+    }
+    
+  }, [blueImage, blueImageStatus, images]);
 
 
+  useEffect(() => {
+
+    console.log("useEffect brownImage", brownImage, brownImageStatus);
+
+
+    if(brownImageStatus === 'loaded' && !images[FieldType.Earth])
+    {
+      let newImages = [...images]
+      newImages[FieldType.Earth] = brownImage as HTMLImageElement;
+      setImages(newImages);
+    }
+    
+  }, [brownImage, brownImageStatus, images]);
 
   useEffect(() => {    
       // const handleLoadedImage = (event:Event) => {
@@ -300,9 +328,9 @@ useEffect(() => {
   }, [playfield, remainingTiles]);
 
 
-  useEffect(() => {
-    console.log("useEffect images", images);
-  }, [images]);
+  // useEffect(() => {
+  //   console.log("useEffect images", images);
+  // }, [images]);
 
   const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
