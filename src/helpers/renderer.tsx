@@ -111,7 +111,7 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 }
 
 
-export function drawNextTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:string[]|null) {
+export function drawNextTile(ctx:CanvasRenderingContext2D , position:Point, size:number, tile:Tile, patterns:(string|CanvasPattern)[]|null) {
   drawShadowedHex(ctx, position, size);
   drawTile(ctx , position, size, tile, patterns);
 }
@@ -421,7 +421,7 @@ export function drawPlayFieldWithCoordinates(ctx:CanvasRenderingContext2D, playF
 
 
 
-export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|TileWithCoordinates|null, patterns:string[] | null) {
+export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFieldNeighborhood:Coordinates[], tileSize:number, nextTile:Tile|TileWithCoordinates|null, patterns:(string|CanvasPattern)[]|null) {
   
   const offset:Point = computeOffset({width: ctx.canvas.width, height: ctx.canvas.height}, playFieldNeighborhood, tileSize);
   

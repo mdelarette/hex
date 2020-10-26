@@ -190,7 +190,7 @@ const App: React.FC = () => {
       let initialSize = computeSize({tiles:[]}, {width: initialWidth, height: initialHeight});
 
       let versionFromStorage = localStorage.getItem('version');
-      if(version === versionFromStorage)
+      if(versionFromStorage && version === JSON.parse(versionFromStorage))
       {
         let playfieldStringFromStorage = localStorage.getItem('playfield');
         let remainingTilesStringFromStorage = localStorage.getItem('remainingTiles');
@@ -218,6 +218,10 @@ const App: React.FC = () => {
             return;
           }
         }
+      }
+      else
+      {
+        console.log("Not same version", version,versionFromStorage);
       }      
       
       handleNewGame();
@@ -520,11 +524,11 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
           <BackgroundCanvas size={canvasSize} defaultPatterns={defaultPatterns} playfield={playfield} tileSize={tileSize} images={images}/>
           <MessagesCanvas size={canvasSize} messages={messages}/>
 
-          {touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={nextTile} patterns={defaultPatterns}/>)}
-          {!touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={null} patterns={null} />)}
+          {touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={nextTile} defaultPatterns={defaultPatterns} images={images}/>)}
+          {!touchMode && (<TouchHelperCanvas size={canvasSize} playfield={playfield} tileSize={tileSize} nextTile={null} defaultPatterns={null}  images={null}/>)}
           
 
-          <ForegroundCanvas size={canvasSize}  nextTile={!touchMode ? nextTile : null} patterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize}/>
+          <ForegroundCanvas size={canvasSize}  nextTile={!touchMode ? nextTile : null} defaultPatterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize} images={images}/>
         </div>
       )}
 
