@@ -196,17 +196,17 @@ const App: React.FC = () => {
       setTileSize(initialSize);
 
 
-      // Patterns initialisation
+      // // Patterns initialisation
       
-      console.log("Patterns initialisation");
-      let blueImage = new Image();
-      blueImage.id = FieldType.Water.toString();
-      blueImage.src = blueImagePath;
+      // console.log("Patterns initialisation");
+      // let blueImage = new Image();
+      // blueImage.id = FieldType.Water.toString();
+      // blueImage.src = blueImagePath;
       
-      blueImage.onload = handleLoadedImage;
+      // blueImage.onload = handleLoadedImage;
 
         
-      console.log("Patterns initialisation ?");
+      // console.log("Patterns initialisation ?");
 
   }, []);
 
