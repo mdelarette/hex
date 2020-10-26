@@ -1,0 +1,82 @@
+
+import { Point } from '../types/tile'
+
+export const drawMeeple = function(ctx:CanvasRenderingContext2D, position:Point, tileSize:number, color:string) {
+
+    // console.log("drawMeeple");
+    ctx.save();
+    ctx.translate(position.x-tileSize/2,position.y-tileSize/2);
+    ctx.scale(tileSize/100,tileSize/100);
+    ctx.fillStyle = color;
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'butt';
+    ctx.lineJoin = 'miter';
+    ctx.miterLimit = 4;
+    ctx.beginPath();
+    ctx.moveTo(99.992,43.019);
+    ctx.bezierCurveTo(100.57,29.262,67.638,22.564,66.211,20.996);
+    ctx.bezierCurveTo(65.5,20.216,67.861,-0.015,50,0);
+    ctx.bezierCurveTo(32.139,-0.015,34.499,20.216,33.788,20.996);
+    ctx.bezierCurveTo(32.361,22.564,-0.569,29.262,0.008,43.019);
+    ctx.bezierCurveTo(0.584,56.777,18.059,49.711,21.786,53.76);
+    ctx.bezierCurveTo(25.046,57.304,6.507,79.989,4.433,94.394);
+    ctx.bezierCurveTo(3.757,99.089,5.077,100,9.64,100);
+    ctx.bezierCurveTo(17.916,100,25.817,99.995,33.093,99.995);
+    ctx.bezierCurveTo(36.38,99.995,37.549,98.106,39.245,95.503);
+    ctx.bezierCurveTo(42.999,89.741,47.533,80.479,50,80.48);
+    ctx.bezierCurveTo(52.466,80.479,57.001,89.741,60.755,95.502);
+    ctx.bezierCurveTo(62.451,98.106,63.619,99.994,66.906,99.994);
+    ctx.bezierCurveTo(74.181,99.994,82.083,99.999,90.359,99.999);
+    ctx.bezierCurveTo(94.922,99.999,96.243,99.088,95.566,94.393);
+    ctx.bezierCurveTo(93.493,79.988,74.955,57.303,78.213,53.7595);
+    ctx.bezierCurveTo(81.94,49.711,99.417,56.777,99.992,43.019);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    // ctx.save();
+    // ctx.fillStyle = "#000000";
+    // ctx.translate(0,0);
+    // ctx.beginPath();
+    // ctx.moveTo(0,0);
+    // ctx.lineTo(300,0);
+    // ctx.lineTo(300,300);
+    // ctx.lineTo(0,300);
+    // ctx.closePath();
+    // ctx.clip();
+    // ctx.translate(0,0);
+    // ctx.translate(0,0);
+    // ctx.scale(3,3);
+    // ctx.translate(0,0);
+    // ctx.strokeStyle = 'rgba(0,0,0,0)';
+    // ctx.lineCap = 'butt';
+    // ctx.lineJoin = 'miter';
+    // ctx.miterLimit = 4;
+    // ctx.save();
+    // ctx.beginPath();
+    // ctx.moveTo(99.992,43.019);
+    // ctx.bezierCurveTo(100.570,29.262,67.638,22.564,66.211,20.996);
+    // ctx.bezierCurveTo(65.5,20.216,67.861,-0.015,50,0);
+    // ctx.bezierCurveTo(32.139,-0.015,34.499,20.216,33.788,20.996);
+    // ctx.bezierCurveTo(32.361,22.564,-0.5690000000000026,29.262,0.007999999999995566,43.019);
+    // ctx.bezierCurveTo(0.5839999999999955,56.777,18.058999999999994,49.711,21.785999999999994,53.76);
+    // ctx.bezierCurveTo(25.045999999999992,57.303999999999995,6.506999999999994,79.989,4.432999999999993,94.394);
+    // ctx.bezierCurveTo(3.757,99.089,5.077,100,9.64,100);
+    // ctx.bezierCurveTo(17.916,100,25.817,99.995,33.093,99.995);
+    // ctx.bezierCurveTo(36.38,99.995,37.549,98.106,39.245000000000005,95.503);
+    // ctx.bezierCurveTo(42.999,89.741,47.533,80.479,50,80.48);
+    // ctx.bezierCurveTo(52.466,80.479,57.001,89.741,60.755,95.502);
+    // ctx.bezierCurveTo(62.451,98.106,63.619,99.994,66.906,99.994);
+    // ctx.bezierCurveTo(74.181,99.994,82.083,99.999,90.359,99.999);
+    // ctx.bezierCurveTo(94.922,99.999,96.243,99.088,95.566,94.393);
+    // ctx.bezierCurveTo(93.493,79.988,74.955,57.303,78.213,53.7595);
+    // ctx.bezierCurveTo(81.94,49.711,99.417,56.777,99.992,43.019);
+    // ctx.closePath();
+    // ctx.fill();
+    // ctx.stroke();
+    // ctx.restore();
+    // ctx.restore();
+
+};

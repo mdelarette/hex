@@ -6,6 +6,7 @@ import {useState, useEffect} from 'react';
 import { Tile, Dimension, FieldType } from '../types/tile';
 import { drawNextTile } from '../helpers/renderer';
 
+// import { drawMeeple } from '../helpers/drawMeeple';
 
 const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, defaultPatterns: string[], onClick:Function | null, onWheel:Function | null, tileSize:number, images:(HTMLImageElement | null)[]}> = ({size, nextTile, defaultPatterns, onClick, onWheel, tileSize, images}) => {
     
@@ -22,19 +23,14 @@ const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, default
     }, []);
     
     useEffect(() => {
-        console.log("ForegroundCanvas useEffect images", images);
-
         if(context)
         {
             let newPatterns = [...patterns];
 
             let img = images[FieldType.Earth];
-            console.log("ForegroundCanvas img Earth", img);
             if(img)
             {
                 let p = context.createPattern(img, 'repeat');
-                console.log("ForegroundCanvas useEffect p", p);
-
                 if(p)
                 {
                     newPatterns[FieldType.Earth] = p;
@@ -44,11 +40,9 @@ const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, default
 
 
             let img2 = images[FieldType.Water];
-            console.log("ForegroundCanvas img Water", img2);
             if(img2)
             {
                 let p = context.createPattern(img2, 'repeat');
-                console.log("ForegroundCanvas useEffect p", p);
 
                 if(p)
                 {
@@ -73,8 +67,10 @@ const ForegroundCanvas: React.FC<{size:Dimension, nextTile: Tile | null, default
             context.clearRect(0,0,size.width,size.height);
             if(nextTile)
             {
-                // drawTile(context, mousePos, tileSize, nextTile, patterns);
                 drawNextTile(context, mousePos, tileSize, nextTile, patterns);
+
+                // drawMeeple(context, mousePos, tileSize, "green");
+
             }
         }
 

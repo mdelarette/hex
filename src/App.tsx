@@ -113,34 +113,25 @@ const App: React.FC = () => {
   const [brownImage, brownImageStatus] = useImage(brownImagePath);
 
   useEffect(() => {
-
-    console.log("useEffect blueImage", blueImage, blueImageStatus);
-
-
     if(blueImageStatus === 'loaded' && !images[FieldType.Water])
     {
       let newImages = [...images]
       newImages[FieldType.Water] = blueImage as HTMLImageElement;
       setImages(newImages);
-    }
-    
+    }    
   }, [blueImage, blueImageStatus, images]);
 
 
   useEffect(() => {
-
-    console.log("useEffect brownImage", brownImage, brownImageStatus);
-
-
     if(brownImageStatus === 'loaded' && !images[FieldType.Earth])
     {
       let newImages = [...images]
       newImages[FieldType.Earth] = brownImage as HTMLImageElement;
       setImages(newImages);
-    }
-    
+    }    
   }, [brownImage, brownImageStatus, images]);
 
+  
   useEffect(() => {    
       // const handleLoadedImage = (event:Event) => {
 

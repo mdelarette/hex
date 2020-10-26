@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 
 import { Tile, Dimension } from '../types/tile';
 import {drawTile} from '../helpers/renderer';
+import { drawMeeple } from '../helpers/drawMeeple';
 
 
 const NextTileCanvas: React.FC<{size:Dimension, nextTile: Tile | null, patterns: string[], tileSize:number}> = ({size, nextTile, patterns, tileSize}) => {
@@ -31,6 +32,11 @@ const NextTileCanvas: React.FC<{size:Dimension, nextTile: Tile | null, patterns:
             if(nextTile)
             {
                 drawTile(context, {x: size.width/2, y: size.height/2}, tileSize, nextTile, patterns);
+
+
+
+                drawMeeple(context, {x: size.width/2, y: size.height/2}, tileSize, "green");
+
             }
         }
 

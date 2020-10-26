@@ -12,6 +12,9 @@ npm install --save <name> → yarn add <name>
     <!-- https://www.html5rocks.com/en/tutorials/canvas/performance/ -->
     <!-- https://www.redblobgames.com/grids/hexagons/ -->
 
+    https://thenounproject.com/term/meeple/1269/
+    http://professorcloud.com/svg-to-canvas/
+
 ## VERSIONNING
 
 use : yarn version --patch | --minor | --major

@@ -18,23 +18,17 @@ const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], pla
         let c:HTMLCanvasElement|null = document.getElementById("background") as HTMLCanvasElement;        
         let ctx = c.getContext("2d");
         setContext(ctx);
-
     }, []);
     
     useEffect(() => {
-        console.log("BackgroundCanvas useEffect images", images);
-
         if(context)
         {
             let newPatterns = [...patterns];
 
             let img = images[FieldType.Earth];
-            console.log("BackgroundCanvas img Earth", img);
             if(img)
             {
                 let p = context.createPattern(img, 'repeat');
-                console.log("BackgroundCanvas useEffect p", p);
-
                 if(p)
                 {
                     newPatterns[FieldType.Earth] = p;
@@ -44,12 +38,9 @@ const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], pla
 
 
             let img2 = images[FieldType.Water];
-            console.log("BackgroundCanvas img Water", img2);
             if(img2)
             {
                 let p = context.createPattern(img2, 'repeat');
-                console.log("BackgroundCanvas useEffect p", p);
-
                 if(p)
                 {
                     newPatterns[FieldType.Water] = p;
@@ -73,6 +64,7 @@ const BackgroundCanvas: React.FC<{size:Dimension, defaultPatterns: string[], pla
         {
             context.clearRect(0,0,size.width,size.height);
             drawPlayFieldWithCoordinates(context, playfield, tileSize, patterns );
+            
         } 
 
     }, [playfield, context, size, tileSize, patterns]);

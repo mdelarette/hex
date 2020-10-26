@@ -22,8 +22,6 @@ const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize
 
 
     useEffect(() => {
-        console.log("TouchHelperCanvas useEffect images", images);
-
         if(context && patterns && images)
         {
             let newPatterns = [...patterns];
