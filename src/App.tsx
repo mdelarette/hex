@@ -304,6 +304,40 @@ const handleNewGame = () => {
 }
 
 
+
+const handleShowTiles = () => {
+  
+  const nbLines = 4;
+
+  let flattedDeck = deck.tiles.map(t => t.tile).flat();
+
+  const nbPerLine = Math.ceil(flattedDeck.length / nbLines);
+
+  let newPlayfield:Playfield = {tiles: []};
+
+
+  let q = 0;
+  let r = 0;
+  for(let i = 0; i < flattedDeck.length; i++)
+  {
+    let newTileWithCoordinates:TileWithCoordinates = {...flattedDeck[i], coordinates: {q:q, r:r}};
+
+    q = q+2;
+    if(((q+r/2)/2) % nbPerLine === 0)
+    {
+      r = r+2;
+      q = -r/2;
+    }
+
+    newPlayfield.tiles.push(newTileWithCoordinates);
+  }
+
+
+  setNextTile(null);
+  setPlayfield(newPlayfield);
+  setRemainingTiles([]);
+}
+
 useEffect(() => {
   var newMessages = new Map([
     [ "name", `${name} - ${version}` ],
@@ -506,6 +540,7 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
               >
                 <MenuItem onClick={() => {handleCloseMenu(); handleNewGame();}}>New game</MenuItem>
                 <MenuItem onClick={() => {handleCloseMenu(); handleCtrlZ();}}>Undo</MenuItem>
+                <MenuItem onClick={() => {handleCloseMenu(); handleShowTiles();}}>Show tiles</MenuItem>
         </Menu>
 
 

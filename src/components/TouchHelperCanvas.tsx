@@ -90,16 +90,11 @@ const TouchHelperCanvas: React.FC<{size:Dimension, playfield:Playfield, tileSize
             }
 
             // Display neighborhood
-
-            let c:HTMLCanvasElement|null = document.getElementById("touchHelper") as HTMLCanvasElement;        
-            let ctx = c.getContext("2d");
-            if(ctx){
-
-                ctx.clearRect(0,0,size.width,size.height);
-                // context.fillStyle = "white";
-                // context.fillRect(0,0,width,height);
-    
-                drawPlayFieldNeighborhood(ctx, playfieldNeighborhood, tileSize, nextTile, patterns );
+            if(context){
+                context.clearRect(0,0,size.width,size.height);
+                if(nextTile){
+                    drawPlayFieldNeighborhood(context, playfieldNeighborhood, tileSize, nextTile, patterns );
+                }
             }
         } 
 
