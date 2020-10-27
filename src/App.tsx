@@ -281,6 +281,10 @@ const handleCtrlZ = () => {
     // setTileSize(newTileSize);
 
   }
+
+  var audio = document.getElementById("audio") as HTMLAudioElement;
+  audio.play();
+
 }
 
 const handleNewGame = () => {
