@@ -307,14 +307,22 @@ const handleNewGame = () => {
 
 const handleShowTiles = () => {
   
-  const nbLines = 4;
-
   let flattedDeck = deck.tiles.map(t => t.tile).flat();
+
+  let canvasSizeRatio = canvasSize.height / canvasSize.width;
+
+  let nbLines = 1;
+
+  let ratio = nbLines/(flattedDeck.length/nbLines);
+
+  while (ratio<canvasSizeRatio) {
+    nbLines++;
+    ratio = nbLines/(flattedDeck.length/nbLines);
+  }
 
   const nbPerLine = Math.ceil(flattedDeck.length / nbLines);
 
   let newPlayfield:Playfield = {tiles: []};
-
 
   let q = 0;
   let r = 0;
