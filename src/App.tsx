@@ -350,6 +350,10 @@ const handleShowTiles = () => {
   setRemainingTiles([]);
 }
 
+
+
+
+
 useEffect(() => {
   var newMessages = new Map([
     [ "name", `${name} - ${version}` ],
@@ -512,6 +516,26 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
   }
 }
 
+
+const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+
+  // console.log('handleCapture', event);
+
+  let backgroundCanvas = document.getElementById("background") as HTMLCanvasElement;
+
+  // let dataURL = backgroundCanvas.toDataURL("image/png");
+
+  // console.log('handleCapture', event.nativeEvent);
+  // if(event.nativeEvent && event.nativeEvent.target)
+  // {
+  //   event.currentTarget.src = dataURL;
+  // }
+
+  window.location.href = backgroundCanvas.toDataURL("image/png");
+}
+
+
+
   return (
     <React.Fragment>
       <div className={classes.root} onKeyUp={handleKeyUp} tabIndex={0}>
@@ -553,6 +577,7 @@ const handleKeyUp = (event:React.KeyboardEvent<HTMLElement>) => {
                 <MenuItem onClick={() => {handleCloseMenu(); handleNewGame();}}>New game</MenuItem>
                 <MenuItem onClick={() => {handleCloseMenu(); handleCtrlZ();}}>Undo</MenuItem>
                 <MenuItem onClick={() => {handleCloseMenu(); handleShowTiles();}}>Show tiles</MenuItem>
+                <MenuItem onClick={(e) => {handleCloseMenu(); handleCapture(e);}}>Capture</MenuItem>
         </Menu>
 
 
