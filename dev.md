@@ -2,6 +2,8 @@ install yarn
 
 npm install -g yarn
 
+Documentation on [yarn](https://classic.yarnpkg.com/en/docs/cli/)
+
 yarn deploy
 
 npm install → yarn
@@ -22,3 +24,21 @@ yarn release-patch
 
 to test :
 https://developers.google.com/web/tools/chrome-devtools/remote-debugging?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3
+
+## Security
+
+yarn audit
+
+No [yarn audit fix](https://javascriptbit.com/yarn-audit-fix-security-issues/)
+
+    npm i --package-lock-only
+    npm audit fix
+    rm package-lock.json
+
+yarn outdated
+
+ie
+yarn upgrade react [--latest]
+
+Cannot add property noFallthroughCasesInSwitch, object is not extensible
+https://github.com/facebook/create-react-app/issues/9429
