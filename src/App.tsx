@@ -178,7 +178,7 @@ const App: React.FC = () => {
 
       setCanvasSize({width: initialWidth, height: initialHeight});
 
-      let initialSize = computeSize({tiles:[]}, {width: initialWidth, height: initialHeight});
+      let initialSize = computeSize({tiles:[]}, {width: initialWidth, height: initialHeight}, true);
 
       let versionFromStorage = localStorage.getItem('version');
       if(versionFromStorage && version === JSON.parse(versionFromStorage))
@@ -200,7 +200,7 @@ const App: React.FC = () => {
             setPlayfield(playfieldFromStorage);
             setRemainingTiles(remainingTilesFromStorage);
     
-            let newTileSize = computeSize(playfieldFromStorage, {width: initialWidth, height: initialHeight});
+            let newTileSize = computeSize(playfieldFromStorage, {width: initialWidth, height: initialHeight}, remainingTilesFromStorage.length > 0);
             
             console.log("restoring old game newTileSize", newTileSize);
   
@@ -254,7 +254,7 @@ const App: React.FC = () => {
 
 
   useEffect(() => {
-    let newTileSize = computeSize(playfield, canvasSize);  
+    let newTileSize = computeSize(playfield, canvasSize, remainingTiles.length > 0);  
     setTileSize(newTileSize);
   }, [canvasSize, playfield]);
 
@@ -272,18 +272,13 @@ const handleCtrlZ = () => {
     
     let newRemainingTiles = [newNextTile.id, ...remainingTiles];
     
-    
-    // let newTileSize = computeSize(newPlayfield, canvasSize);
-    
     setNextTile(newNextTile);
     setPlayfield(newPlayfield);
     setRemainingTiles(newRemainingTiles);
-    // setTileSize(newTileSize);
-
   }
 
-  var audio = document.getElementById("audio") as HTMLAudioElement;
-  audio.play();
+  // var audio = document.getElementById("audio") as HTMLAudioElement;
+  // audio.play();
 
 }
 

@@ -465,14 +465,16 @@ export function drawPlayFieldNeighborhood(ctx:CanvasRenderingContext2D, playFiel
 }
 
 
-export function computeSize(playField:Playfield, canvasSize:{width:number, height:number}) {
+export function computeSize(playField:Playfield, canvasSize:{width:number, height:number}, remainingTile:boolean = true) {
   
   // Size for height
-	let minMax = { min: 0, max: 0};
+  let minMax = { min: 0, max: 0};
+  
+  let remaingingTileAdjustment = remainingTile ? 2 : 0;
 	
 	minMax = playField.tiles.reduce((accumulator, tuile) => {return { min: Math.min(accumulator.min, tuile.coordinates.r), max: Math.max(accumulator.max, tuile.coordinates.r)};}, minMax);
 		
-	let nb = minMax.max + (-minMax.min) + 1 + 2;
+	let nb = minMax.max + (-minMax.min) + 1 + remaingingTileAdjustment;
 
 	// let coef = 2 + (nb-1) * (1 + Math.sin(Math.PI/6));
   let coef = 2 + (nb-1) * 1.5;
@@ -492,7 +494,7 @@ export function computeSize(playField:Playfield, canvasSize:{width:number, heigh
       mM.min = Math.min(pos.x, mM.min);
       mM.max = Math.max(pos.x, mM.max);
     }
-    let nb = (mM.max - mM.min + 2 * 10 * cosPiSur6)/(2 * 10 * cosPiSur6) +2;
+    let nb = (mM.max - mM.min + 2 * 10 * cosPiSur6)/(2 * 10 * cosPiSur6) + remaingingTileAdjustment;
     sizeForWidth = canvasSize.width / (nb * 2) / cosPiSur6;
     sizeForWidth = Math.floor(sizeForWidth);
   }
