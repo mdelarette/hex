@@ -1,6 +1,6 @@
 {
   "name": "hex",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "react-scripts build&&gh-pages -d build",
-    "release-patch": "yarn version --patch && git push --follow-tags"
+    "release-patch": "yarn version --patch && git push --follow-tags && react-scripts build&&gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
