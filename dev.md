@@ -25,6 +25,12 @@ yarn release-patch
 to test :
 https://developers.google.com/web/tools/chrome-devtools/remote-debugging?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3
 
+## SECURITY
+
+Regularly lauch : npm audit
+Then npm audit fix if needed
+Commit with tag "npm audit fix"
+
 ## Security
 
 yarn audit
