@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "react-scripts build&&gh-pages -d build",
-    "release-patch": "yarn version --patch && git push --follow-tags && react-scripts build&&gh-pages -d build"
+    "release-patch": "npm version patch && git push --follow-tags && react-scripts build&&gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

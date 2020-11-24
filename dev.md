@@ -1,15 +1,3 @@
-install yarn
-
-npm install -g yarn
-
-Documentation on [yarn](https://classic.yarnpkg.com/en/docs/cli/)
-
-yarn deploy
-
-npm install → yarn
-
-npm install --save <name> → yarn add <name>
-
     <!-- https://www.html5canvastutorials.com/ -->
     <!-- https://www.html5rocks.com/en/tutorials/canvas/performance/ -->
     <!-- https://www.redblobgames.com/grids/hexagons/ -->
@@ -19,11 +7,13 @@ npm install --save <name> → yarn add <name>
 
 ## VERSIONNING
 
-use : yarn version --patch | --minor | --major
-yarn release-patch
+use : npm version patch // Other suggestion to explore here : https://stackoverflow.com/a/39396977/8394211
 
-to test :
-https://developers.google.com/web/tools/chrome-devtools/remote-debugging?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3
+## DEPLOY
+
+npm run deploy
+or
+npm release-patch
 
 ## SECURITY
 
