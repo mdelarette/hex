@@ -31,20 +31,9 @@ Regularly lauch : npm audit
 Then npm audit fix if needed
 Commit with tag "npm audit fix"
 
-## Security
+## OBSOLESCENCE
 
-yarn audit
-
-No [yarn audit fix](https://javascriptbit.com/yarn-audit-fix-security-issues/)
-
-    npm i --package-lock-only
-    npm audit fix
-    rm package-lock.json
-
-yarn outdated
-
-ie
-yarn upgrade react [--latest]
-
-Cannot add property noFallthroughCasesInSwitch, object is not extensible
-https://github.com/facebook/create-react-app/issues/9429
+npm outdated
+npm update [package_name]
+ou
+npm install [package_name]

@@ -33,16 +33,16 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 
 
   // Gauche
-  ctx.beginPath();
-  ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
-  ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
-  ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-  ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-  ctx.closePath();
-
-  ctx.fillStyle = patterns ? patterns[tile.edges[0]] : "red";
-  
-  ctx.fill();
+  {
+    ctx.beginPath();
+    ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
+    ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
+    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.fillStyle = patterns ? patterns[tile.edges[0]] : "red";  
+    ctx.fill();
+  }
 
   // Bas gauche
   ctx.beginPath();
@@ -108,6 +108,167 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   ctx.fillStyle = patterns ? patterns[tile.center] : "red";
 
   ctx.fill();
+
+
+  // Dessin des "plages"
+  if(tile.edges[0] !== tile.edges[1])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x - l * cosPiSur6, y + l * sinPiSur6);
+    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.edges[1] !== tile.edges[2])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x, y + l);
+    ctx.lineTo(x, y + innerLength);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }  
+  if(tile.edges[2] !== tile.edges[3])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
+    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.edges[3] !== tile.edges[4])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
+    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.edges[4] !== tile.edges[5])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x, y - l);
+    ctx.lineTo(x, y - innerLength);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.edges[5] !== tile.edges[0])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
+    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  
+  // Dessin des "plages centrales"
+  if(tile.center !== tile.edges[0])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.center !== tile.edges[1])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x, y + innerLength);
+    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.center !== tile.edges[2])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.lineTo(x, y + innerLength);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.center !== tile.edges[3])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.center !== tile.edges[4])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x, y - innerLength);
+    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
+  if(tile.center !== tile.edges[5])
+  {
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+    ctx.lineTo(x, y - innerLength);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+  }
 }
 
 
