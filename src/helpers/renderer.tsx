@@ -33,16 +33,14 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
 
 
   // Gauche
-  {
-    ctx.beginPath();
-    ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
-    ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
-    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.fillStyle = patterns ? patterns[tile.edges[0]] : "red";  
-    ctx.fill();
-  }
+  ctx.beginPath();
+  ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
+  ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
+  ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
+  ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
+  ctx.closePath();
+  ctx.fillStyle = patterns ? patterns[tile.edges[0]] : "red";  
+  ctx.fill();
 
   // Bas gauche
   ctx.beginPath();
@@ -113,161 +111,117 @@ export function drawTile(ctx:CanvasRenderingContext2D , position:Point, size:num
   // Dessin des "plages"
   if(tile.edges[0] !== tile.edges[1])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(x - l * cosPiSur6, y + l * sinPiSur6);
-    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x - l * cosPiSur6, y: y + l * sinPiSur6},
+      { x: x - innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      size
+    );
   }
+  
   if(tile.edges[1] !== tile.edges[2])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x, y + l);
-    ctx.lineTo(x, y + innerLength);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
-  }  
+    drawBeach(
+      ctx,
+      { x: x, y: y + l},
+      { x: x, y: y + innerLength},
+      size
+    );
+  }
+
   if(tile.edges[2] !== tile.edges[3])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
-    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x + l * cosPiSur6, y: y + l * sinPiSur6},
+      { x: x + innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      size
+    );
   }
+
   if(tile.edges[3] !== tile.edges[4])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
-    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x + l * cosPiSur6, y: y - l * sinPiSur6},
+      { x: x + innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      size
+    );
   }
   if(tile.edges[4] !== tile.edges[5])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x, y - l);
-    ctx.lineTo(x, y - innerLength);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x, y: y - l},
+      { x: x, y: y - innerLength},
+      size
+    );
   }
+
   if(tile.edges[5] !== tile.edges[0])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
-    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x - l * cosPiSur6, y: y - l * sinPiSur6},
+      { x: x - innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      size
+    );
   }
   
   // Dessin des "plages centrales"
   if(tile.center !== tile.edges[0])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x - innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      { x: x - innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      size
+    );
   }
   if(tile.center !== tile.edges[1])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x, y + innerLength);
-    ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x, y: y + innerLength},
+      { x: x - innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      size
+    );
   }
   if(tile.center !== tile.edges[2])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.lineTo(x, y + innerLength);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x + innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      { x: x, y: y + innerLength},
+      size
+    );
   }
   if(tile.center !== tile.edges[3])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x + innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      { x: x + innerLength * cosPiSur6, y: y + innerLength * sinPiSur6},
+      size
+    );
   }
   if(tile.center !== tile.edges[4])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x, y - innerLength);
-    ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x, y: y - innerLength},
+      { x: x + innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      size
+    );
   }
   if(tile.center !== tile.edges[5])
   {
-    ctx.save();
-    ctx.beginPath();
-    ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-    ctx.lineTo(x, y - innerLength);
-    ctx.closePath();
-    ctx.strokeStyle = "#c2b280";    
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-    ctx.restore();
+    drawBeach(
+      ctx,
+      { x: x - innerLength * cosPiSur6, y: y - innerLength * sinPiSur6},
+      { x: x, y: y - innerLength},
+      size
+    );
   }
 }
 
@@ -351,160 +305,21 @@ function drawFilledHex(ctx:CanvasRenderingContext2D, position:Point, size:number
   ctx.fill();
 }
 
-// function drawSimpleTuile(ctx, x, y, l) {
-//   ctx.beginPath();
-//   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x, y + l);
-//   ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x, y - l);
-//   ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.closePath();
 
-//   ctx.fillStyle = "orange";
-//   ctx.fill();
+export function drawBeach(ctx:CanvasRenderingContext2D, start:Point, end:Point, size:number)
+{
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
+    ctx.closePath();
+    ctx.strokeStyle = "#c2b280";    
+    ctx.lineWidth = size/12;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+}
 
-//   let innerLength = l / 3;
-
-//   ctx.beginPath();
-//   ctx.moveTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x, y + innerLength);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x, y - innerLength);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-
-//   ctx.closePath();
-
-//   ctx.fillStyle = "red";
-//   ctx.fill();
-// }
-
-// function drawTuile(ctx, x, y, l, tuile, patterns) {
-//   // console.log("drawTuile", tuile, " at ", x , "x", y);
-
-//   let innerLength = l / 3;
-
-//   // Gauche
-//   ctx.beginPath();
-//   ctx.moveTo(x - l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x - l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.closePath();
-//   ctx.fillStyle = "orange";
-
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[0]];
-//     // ctx.fillStyle = pattern;
-//   }
-
-//   ctx.fill();
-
-//   // Bas gauche
-//   ctx.beginPath();
-//   ctx.moveTo(x - l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x, y + l);
-//   ctx.lineTo(x, y + innerLength);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.closePath();
-//   ctx.fillStyle = "red";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[1]];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-
-//   // Bas droit
-//   ctx.beginPath();
-//   ctx.moveTo(x, y + l);
-//   ctx.lineTo(x + l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x, y + innerLength);
-//   ctx.closePath();
-//   ctx.fillStyle = "blue";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[2]];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-
-//   // Droite
-//   ctx.beginPath();
-//   ctx.moveTo(x + l * cosPiSur6, y + l * sinPiSur6);
-//   ctx.lineTo(x + l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.closePath();
-//   ctx.fillStyle = "green";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[3]];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-
-//   // Haut droit
-//   ctx.beginPath();
-//   ctx.moveTo(x + l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x, y - l);
-//   ctx.lineTo(x, y - innerLength);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.closePath();
-//   ctx.fillStyle = "pink";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[4]];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-
-//   // Haut gauche
-//   ctx.beginPath();
-//   ctx.lineTo(x, y - l);
-//   ctx.lineTo(x - l * cosPiSur6, y - l * sinPiSur6);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x, y - innerLength);
-//   ctx.closePath();
-//   ctx.fillStyle = "yellow";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.cotes[5]];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-
-//   // Hexagone central
-//   ctx.beginPath();
-//   ctx.moveTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x, y + innerLength);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y + innerLength * sinPiSur6);
-//   ctx.lineTo(x + innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.lineTo(x, y - innerLength);
-//   ctx.lineTo(x - innerLength * cosPiSur6, y - innerLength * sinPiSur6);
-//   ctx.closePath();
-
-//   ctx.fillStyle = "brown";
-//   if (tuile) {
-//     ctx.fillStyle = patterns[tuile.centre];
-//     // ctx.fillStyle = pattern;
-//   }
-//   ctx.fill();
-// }
-
-
-// export function drawPlayField(ctx:CanvasRenderingContext2D, playField) {
-//   for (let i = 0; i < playField.length; i++) {
-//     let tuileInPlay = playField[i];
-//     drawTile(
-//       ctx,
-//       tuileInPlay.mousePos.x,
-//       tuileInPlay.mousePos.y,
-//       50,
-//       tuileInPlay.tuile
-//     );
-//   }
-// }
 
 // https://www.redblobgames.com/grids/hexagons/#pixel-to-hex
 export function pixel_to_pointy_hex(point:Point, size:number) {
