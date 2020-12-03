@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/hex/static/css/main.5eed63a6.chunk.css",
-    "main.js": "/hex/static/js/main.67fde4f7.chunk.js",
-    "main.js.map": "/hex/static/js/main.67fde4f7.chunk.js.map",
+    "main.js": "/hex/static/js/main.2fcb1101.chunk.js",
+    "main.js.map": "/hex/static/js/main.2fcb1101.chunk.js.map",
     "runtime-main.js": "/hex/static/js/runtime-main.ef845286.js",
     "runtime-main.js.map": "/hex/static/js/runtime-main.ef845286.js.map",
     "static/js/2.2ead6776.chunk.js": "/hex/static/js/2.2ead6776.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.ef845286.js",
     "static/js/2.2ead6776.chunk.js",
     "static/css/main.5eed63a6.chunk.css",
-    "static/js/main.67fde4f7.chunk.js"
+    "static/js/main.2fcb1101.chunk.js"
   ]
 }
