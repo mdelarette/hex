@@ -30,10 +30,10 @@ import {useState, useEffect} from 'react';
 import useWindowSize from "../src/utils/useWindowSize";
 import useImage from "../src/utils/useImage";
 
-import { name, version } from "../package.json";
+import packageInfo  from "../package.json";
 
 import deck from '../src/data/tuile';
-import { defaultPatterns } from '../src/data/tuile';
+import { catan_deck, defaultPatterns } from '../src/data/tuile';
 
 import { shuffleArray, rotateArray } from './helpers/deck';
 
@@ -48,7 +48,7 @@ import TouchHelperCanvas from './components/TouchHelperCanvas';
 import NextTileCanvas from './components/NextTileCanvas';
 
 
-import { Tile, TileWithCoordinates, Point, Playfield, Dimension, FieldType } from './types/tile';
+import { Deck, Tile, TileWithCoordinates, Point, Playfield, Dimension, FieldType } from './types/tile';
 
 
 
@@ -95,6 +95,7 @@ const App: React.FC = () => {
   
   const [tileSize, setTileSize] = useState(25);
 
+  const [mainDeck, setMainDeck] = useState<Deck>(deck);
   const [nextTile, setNextTile] = useState<Tile | null>(null);
   const [remainingTiles, setRemainingTiles] = useState<number[]>([]);
 
@@ -181,7 +182,7 @@ const App: React.FC = () => {
       let initialSize = computeSize({tiles:[]}, {width: initialWidth, height: initialHeight}, true);
 
       let versionFromStorage = localStorage.getItem('version');
-      if(versionFromStorage && version === JSON.parse(versionFromStorage))
+      if(versionFromStorage && packageInfo.version === JSON.parse(versionFromStorage))
       {
         let playfieldStringFromStorage = localStorage.getItem('playfield');
         let remainingTilesStringFromStorage = localStorage.getItem('remainingTiles');
@@ -193,7 +194,7 @@ const App: React.FC = () => {
             console.log("restoring old game", playfieldStringFromStorage);
     
     
-            let tile = deck.tiles.find(x => x.tile.id === remainingTilesFromStorage[0]);
+            let tile = mainDeck.tiles.find(x => x.tile.id === remainingTilesFromStorage[0]);
             let nextTile = tile ? tile.tile : null;  
           
             setNextTile(nextTile);
@@ -212,7 +213,7 @@ const App: React.FC = () => {
       }
       else
       {
-        console.log("Not same version", version,versionFromStorage);
+        console.log("Not same version", packageInfo.version,versionFromStorage);
       }      
       
       handleNewGame();
@@ -284,7 +285,12 @@ const handleCtrlZ = () => {
 
 const handleNewGame = () => {
   
-  let flattedDeck = deck.tiles.map(t => {
+  // let newDeck = deck;
+  let newDeck = catan_deck; // use from parameter
+
+  console.log("handleNewGame", newDeck);
+
+  let flattedDeck = newDeck.tiles.map(t => {
     let a = [];
     for(var i = 0; i<t.quantity; i++) {
       a.push(t.tile.id);
@@ -292,11 +298,19 @@ const handleNewGame = () => {
     return a;
   }).flat();
 
+  console.log("handleNewGame flattedDeck", flattedDeck);
+
   let shuffledDeck = shuffleArray(flattedDeck);
 
-  let tile = deck.tiles.find(x => x.tile.id === shuffledDeck[0]);
-  let nextTile = tile ? tile.tile : null;  
+  console.log("handleNewGame shuffledDeck", shuffledDeck);
+  
+  // let tile = shuffledDeck.tiles.find(x => x.tile.id === shuffledDeck[0]);
+  let tile = shuffledDeck[0];
+  let nextTile = tile ? tile: null;  
 
+  console.log("nextTile", nextTile);
+
+  setMainDeck(catan_deck);
   setNextTile(nextTile);
   setPlayfield({tiles: []});
   setRemainingTiles(shuffledDeck);
@@ -306,7 +320,7 @@ const handleNewGame = () => {
 
 const handleShowTiles = () => {
   
-  let flattedDeck = deck.tiles.map(t => t.tile).flat();
+  let flattedDeck = mainDeck.tiles.map(t => t.tile).flat();
 
   let canvasSizeRatio = canvasSize.height / canvasSize.width;
 
@@ -351,7 +365,7 @@ const handleShowTiles = () => {
 
 useEffect(() => {
   var newMessages = new Map([
-    [ "name", `${name} - ${version}` ],
+    [ "name", `${packageInfo.name} - ${packageInfo.version}` ],
     [ "remainingTiles", `${remainingTiles.length}` ]
   ]);
   setMessages(newMessages);
@@ -361,7 +375,7 @@ useEffect(() => {
 
   useEffect(() => {
 
-    localStorage.setItem('version', JSON.stringify(version));
+    localStorage.setItem('version', JSON.stringify(packageInfo.version));
     localStorage.setItem('playfield', JSON.stringify(playfield));
     localStorage.setItem('remainingTiles', JSON.stringify(remainingTiles));    
 
@@ -385,6 +399,7 @@ useEffect(() => {
 
     if(!nextTile)
     {
+      console.log("handleClick no nextTile");
       return;
     }
     
@@ -445,7 +460,7 @@ useEffect(() => {
 		if(newRemainingTiles.length > 0)
 		{
 			newRemainingTiles.shift();
-      const newNextTile = deck.tiles.find(x => x.tile.id === newRemainingTiles[0])?.tile;
+      const newNextTile = mainDeck.tiles.find(x => x.tile.id === newRemainingTiles[0])?.tile; // todo change deck by current
       
       setNextTile(newNextTile ? newNextTile : null);
     }
@@ -542,7 +557,7 @@ const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
             </IconButton>
 
             <Typography variant="h6" className={classes.title}>
-            {`${name} - ${version}`}
+            {`${packageInfo.name} - ${packageInfo.version}`}
             </Typography>
 
             

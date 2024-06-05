@@ -4,19 +4,58 @@ import { Tile, FieldType, Deck } from '../types/tile';
 // Water = 0,
 // Earth,
 // Forest,
-// Desert
-export const defaultPatterns = ['#7dd1ff', '#a65a35', 'green', 'yellow'];
+// Desert,
+// Field,
+// Clay,
+// Mountain
+export const defaultPatterns = ['#7dd1ff', '#a65a35', 'green', '#FFFFCC', 'yellow', 'orange', 'grey', '#009933'];
 
-const tile_1002: Tile = {
-  id: -2,
+// CATAN STYLE
+const catan_forest: Tile = {
+  id: 1001,
   name: "Forest",
   center: FieldType.Forest
 };
-const tile_1001: Tile = {
-  id: -1,
+const catan_desert: Tile = {
+  id: 1002,
   name: "Desert",
   center: FieldType.Desert
 };
+const catan_field: Tile = {
+  id: 1003,
+  name: "Field",
+  center: FieldType.Field
+};
+const catan_clay: Tile = {
+  id: 1004,
+  name: "Clay",
+  center: FieldType.Clay
+};
+const catan_moutain: Tile = {
+  id: 1005,
+  name: "Mountain",
+  center: FieldType.Mountain
+};
+const catan_meadow: Tile = {
+  id: 1006,
+  name: "Meadow",
+  center: FieldType.Meadow
+};
+
+
+export const catan_deck:Deck = {tiles:[
+  { tile: catan_clay, quantity: 3 },
+  { tile: catan_desert, quantity: 1 },
+  { tile: catan_field, quantity: 4 },
+  { tile: catan_forest, quantity: 4 },
+  { tile: catan_moutain, quantity: 3 },
+  { tile: catan_meadow, quantity: 4 }
+]};
+
+
+
+
+// Hex style
 
 const tile_001: Tile = {
   id: 1,
@@ -180,13 +219,6 @@ const tuile113: Tile = {
 
 
 const deck:Deck = {tiles:[
-
-  // { tile: tile_1002, quantity: 4 },
-  // { tile: tile_1001, quantity: 4 },
-
-
-  
-  
 
   { tile: tile_001, quantity: 3 },
   { tile: tuile2, quantity: 1 },

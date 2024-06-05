@@ -2,7 +2,11 @@ export enum FieldType {
     Water = 0,
     Earth,
     Forest,
-    Desert
+    Desert,
+    Field,
+    Clay,
+    Mountain,
+    Meadow,
   }
 
 

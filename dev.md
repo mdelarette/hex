@@ -5,6 +5,15 @@
     https://thenounproject.com/term/meeple/1269/
     http://professorcloud.com/svg-to-canvas/
 
+## Requirement 1
+
+    install node https://nodejs.org
+
+## Requirement 2
+
+    create node_modules : npm install
+
+
 ## VERSIONNING
 
 use : npm version patch // Other suggestion to explore here : https://stackoverflow.com/a/39396977/8394211
@@ -27,3 +36,9 @@ npm outdated
 npm update [package_name]
 ou
 npm install [package_name]
+
+
+
+## LAUNCH
+
+npm start
