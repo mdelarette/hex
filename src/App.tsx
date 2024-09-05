@@ -5,23 +5,26 @@ import blueImagePath from '../src/patterns/ocean.jpg'; // gives image path
 import brownImagePath from '../src/patterns/herbe.jpg'; // gives image path
 
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+// import { Theme } from '@mui/material/styles';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+// import createStyles from '@mui/styles/createStyles';
+// import makeStyles from '@mui/styles/makeStyles';
+
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import TouchAppIcon from '@material-ui/icons/TouchAppTwoTone';
-import MouseIcon from '@material-ui/icons/MouseTwoTone';
-import RotateLeftIcon from '@material-ui/icons/RotateLeftTwoTone';
-import RotateRightIcon from '@material-ui/icons/RotateRightTwoTone';
+import TouchAppIcon from '@mui/icons-material/TouchAppTwoTone';
+import MouseIcon from '@mui/icons-material/MouseTwoTone';
+import RotateLeftIcon from '@mui/icons-material/RotateLeftTwoTone';
+import RotateRightIcon from '@mui/icons-material/RotateRightTwoTone';
 
 // HOOKS
 import {useState, useEffect} from 'react';
@@ -49,41 +52,42 @@ import NextTileCanvas from './components/NextTileCanvas';
 
 
 import { Deck, Tile, TileWithCoordinates, Point, Playfield, Dimension, FieldType } from './types/tile';
+import { Box } from '@mui/material';
 
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     root: {
+//       flexGrow: 1,
+//     },
+//     menuButton: {
+//       marginRight: theme.spacing(2),
+//     },
+//     title: {
+//       flexGrow: 1,
+//     },
 
-    appBar: {
-      top: 'auto',
-      bottom: 0,
-      '& > div': {alignItems: 'flex-start'}
-    },
-    grow: {
-      flexGrow: 1,
-    },
+//     appBar: {
+//       top: 'auto',
+//       bottom: 0,
+//       '& > div': {alignItems: 'flex-start'}
+//     },
+//     grow: {
+//       flexGrow: 1,
+//     },
 
-    canvasesContainer: {
-      position: 'absolute'
-    },
+//     canvasesContainer: {
+//       position: 'absolute'
+//     },
 
-  }),
-);
+//   }),
+// );
 
 
 const App: React.FC = () => {
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [touchMode] = useState<boolean>(navigator.maxTouchPoints > 0);
 
@@ -232,7 +236,8 @@ const App: React.FC = () => {
         
       // console.log("Patterns initialisation ?");
 
-  }, []);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Pas dépendant de mainDeck.tiles
 
 
 
@@ -257,7 +262,7 @@ const App: React.FC = () => {
   useEffect(() => {
     let newTileSize = computeSize(playfield, canvasSize, remainingTiles.length > 0);  
     setTileSize(newTileSize);
-  }, [canvasSize, playfield]);
+  }, [canvasSize, playfield, remainingTiles.length]);
 
 
 const handleCtrlZ = () => {
@@ -472,7 +477,7 @@ useEffect(() => {
 }
 
 
-const handleWheel = (delta:Number) => {    
+const handleWheel = (delta:number) => {    
   if(!nextTile)
   {
     return;
@@ -547,29 +552,42 @@ const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 
 
   return (
-    <React.Fragment>
-      <div className={classes.root} onKeyUp={handleKeyUp} tabIndex={0}>
+    (<React.Fragment>
+      <div onKeyUp={handleKeyUp} tabIndex={0}>
         <AppBar id={"topBar"} position="static" >
           <Toolbar>
 
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClickMenu}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleClickMenu}
+              size="large">
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6">
             {`${packageInfo.name} - ${packageInfo.version}`}
             </Typography>
 
             
 
             {touchMode && (            
-              <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="touchApp">
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="touchApp"
+                size="large">
                 <TouchAppIcon /> {navigator.maxTouchPoints}
               </IconButton>            
             )}
             
             {!touchMode && (            
-              <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="mouseApp">
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="mouseApp"
+                size="large">
                 <MouseIcon />
               </IconButton>            
             )}
@@ -592,7 +610,7 @@ const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 
 
         {canvasSize.width && canvasSize.height && (
-        <div id={"canvasesContainer"} className={classes.canvasesContainer}>
+        <Box id={"canvasesContainer"} sx={{position: 'absolute'}}>
 
           <BackgroundCanvas size={canvasSize} defaultPatterns={defaultPatterns} playfield={playfield} tileSize={tileSize} images={images}/>
           <MessagesCanvas size={canvasSize} messages={messages}/>
@@ -602,22 +620,34 @@ const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
           
 
           <ForegroundCanvas size={canvasSize}  nextTile={!touchMode ? nextTile : null} defaultPatterns={defaultPatterns} onClick={handleClick}  onWheel={handleWheel} tileSize={tileSize} images={images}/>
-        </div>
+        </Box>
       )}
 
         
       {touchMode && (
-        <AppBar id={"bottomBar"} position="fixed" color="primary" className={classes.appBar}>
+        <AppBar id={"bottomBar"} position="fixed" color="primary">
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="rotate left" onClick={handleRotateLeft} disabled={!nextTile}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="rotate left"
+              onClick={handleRotateLeft}
+              disabled={!nextTile}
+              size="large">
               <RotateLeftIcon />
             </IconButton>
-            <div className={classes.grow} />
+            <div className={"classes.grow"} />
             <div>
               <NextTileCanvas size={{width:48, height:48}} nextTile={nextTile} patterns={defaultPatterns} tileSize={24}/>
             </div>
-            <div className={classes.grow} />
-            <IconButton edge="end" color="inherit" aria-label="rotate right" onClick={handleRotateRight} disabled={!nextTile}>
+            <div className={"classes.grow"} />
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="rotate right"
+              onClick={handleRotateRight}
+              disabled={!nextTile}
+              size="large">
               <RotateRightIcon />
             </IconButton>
           </Toolbar>
@@ -627,7 +657,7 @@ const handleCapture = (event:React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 
 
       </div>
-    </React.Fragment>
+    </React.Fragment>)
   );
 }
 
