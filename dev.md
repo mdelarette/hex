@@ -42,3 +42,11 @@ npm install [package_name]
 ## LAUNCH
 
 npm start
+
+
+
+## Obsolescence with ncu
+npm install -g npm-check-updates
+ncu -u
+npm update
+npm install
