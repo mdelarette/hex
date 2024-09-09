@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hex/static/css/main.076817e4.css",
-    "main.js": "/hex/static/js/main.884058c8.js",
+    "main.js": "/hex/static/js/main.91efa72e.js",
     "static/media/herbe.jpg": "/hex/static/media/herbe.45ccdaf8b57b5ef65c20.jpg",
     "static/media/ocean.jpg": "/hex/static/media/ocean.b8757f09e29eba7f0be2.jpg",
     "index.html": "/hex/index.html",
     "main.076817e4.css.map": "/hex/static/css/main.076817e4.css.map",
-    "main.884058c8.js.map": "/hex/static/js/main.884058c8.js.map"
+    "main.91efa72e.js.map": "/hex/static/js/main.91efa72e.js.map"
   },
   "entrypoints": [
     "static/css/main.076817e4.css",
-    "static/js/main.884058c8.js"
+    "static/js/main.91efa72e.js"
   ]
 }
